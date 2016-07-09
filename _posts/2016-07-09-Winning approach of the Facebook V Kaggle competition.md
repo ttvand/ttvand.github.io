@@ -14,22 +14,37 @@ The [Facebook V: Predicting Check Ins data science competition](https://www.kagg
 
 ## Overview
 
-## Introduction
+This blog post will cover ! Here's an overview of the different sections. If you want to skip ahead, just click the section title to go there.
+
+* *[Introduction](#introduction)*
+* *[Exploratory analysis](#explorAnalysis)*
+* *[Problem definition](#probDef)*
+* *[Candidate selection 1](#candidateSel1)*
+* *[Feature engineering](#featEng)*
+* *[Candidate selection 2](#candidateSel2)*
+* *[First level learners](#firstLL)*
+* *[Second level learners](#secondLL)*
+* *[Conclusion](#conclusion)*
+
+## <a name="introduction"><a> Introduction
 
 {% include image.html url="/img/FB5_banner.png" description="Hello world" %}
 
 {% include image.html url="/img/kaggle_screenshot-min.png" description="Hello world" %}
 
-## Exploratory analysis
+## <a name="explorAnalysis"><a> Exploratory analysis
 
-## Candidate selection 1
+## <a name="probDef"><a> Problem definition
 
-## Feature engineering
+## <a name="candidateSel1"><a> Candidate selection 1
 
-## Candidate selection 2
+## <a name="featEng"><a> Feature engineering
 
-## First level learners
+## <a name="candidateSel2"><a> Candidate selection 2
 
-## Second level learners
+## <a name="firstLL"><a> First level learners
 
-## Ideas to improve approach
+## <a name="secondLL"><a> Second level learners
+
+## <a name="conclusion"><a> Conclusion
+Ideas to improve approach & LB plot
