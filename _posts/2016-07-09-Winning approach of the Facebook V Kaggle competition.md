@@ -14,11 +14,12 @@ The [Facebook V: Predicting Check Ins data science competition](https://www.kagg
 
 ## Overview
 
-This blog post will cover ! Here's an overview of the different sections. If you want to skip ahead, just click the section title to go there.
+This blog post will cover all sections to go from the raw data to the . Here's an overview of the different sections. If you want to skip ahead, just click the section title to go there.
 
 * *[Introduction](#introduction)*
 * *[Exploratory analysis](#explorAnalysis)*
 * *[Problem definition](#probDef)*
+* *[Strategy](#strategy)*
 * *[Candidate selection 1](#candidateSel1)*
 * *[Feature engineering](#featEng)*
 * *[Candidate selection 2](#candidateSel2)*
@@ -28,17 +29,21 @@ This blog post will cover ! Here's an overview of the different sections. If you
 
 ## <a name="introduction"><a> Introduction
 
-{% include image.html url="/img/FB5_banner.png" description="Hello world" %}
+{% include image.html url="/img/FB5_banner.png" description="Competition banner" %}
 
-{% include image.html url="/img/kaggle_screenshot-min.png" description="Hello world" %}
+{% include image.html url="/img/kaggle_screenshot-min.png" description="Check Ins where each place has a different color" %}
 
 ## <a name="explorAnalysis"><a> Exploratory analysis
 
 ## <a name="probDef"><a> Problem definition
 
+## <a name="strategy"><a> Strategy
+
 ## <a name="candidateSel1"><a> Candidate selection 1
 
 ## <a name="featEng"><a> Feature engineering
+
+{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation in x versus time and accuracy" %}
 
 ## <a name="candidateSel2"><a> Candidate selection 2
 
@@ -48,3 +53,5 @@ This blog post will cover ! Here's an overview of the different sections. If you
 
 ## <a name="conclusion"><a> Conclusion
 Ideas to improve approach & LB plot
+
+{% include image.html url="/img/PrivateLB.png" description="Hello world" %}
