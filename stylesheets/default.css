@@ -18,7 +18,7 @@ a:hover, a:active, #sidebar a:active, #sidebar a:hover, #content a {
   color: #b40 !important;
 }
 #site {
-  width: 850px;
+  width: 1050px;
   margin: auto;
 }
 
@@ -42,7 +42,7 @@ h1 a, h1 a:link, h1 a:visited {
 }
 
 #sidebar {
-  width: 160px;
+  width: 60px;
   padding: 10px 20px 20px 20px;
   border-left: 5px solid #eee;
   float: right;
@@ -71,7 +71,7 @@ h1 a, h1 a:link, h1 a:visited {
 }
 
 #content {
-  width: 600px;
+  width: 900px;
   padding: 0 20px 20px 20px;
 }
 #content ul {
