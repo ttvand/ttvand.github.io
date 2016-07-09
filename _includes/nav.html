@@ -18,9 +18,6 @@
                 <li>
                     <a href="{{ site.baseurl }}/">Home</a>
                 </li>
-                <li>
-                    <a href="{{ site.baseurl }}/CV.pdf" onClick="ga('send', 'event', 'Menu', 'Download', 'cv.pdf');">CV</a>
-                </li>
                 {% for page in site.pages %}{% if page.title %}
                 <li>
                     <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
