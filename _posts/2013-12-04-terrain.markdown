@@ -1,0 +1,20 @@
+---
+layout:     post
+title:      "Talks on ICMLA about terrain classification"
+subtitle:   "My paper on classifying terrain using the sensors on a quadrupedal robot, got accepted to the 
+ICMLA conference."
+date:       2013-12-04 01:00:00
+author:     "317070"
+header-img: "img/post-terrain-bg.jpg"
+published:  true
+---
+
+<p>Using data retrieved from the Puppy II robot at the University of Zurich (UZH), we show that machine 
+learning techniques with non-linearities and fading memory are effective for terrain classiﬁcation, both 
+supervised and unsupervised, even with a limited selection of input sensors. The results indicate that most 
+information for terrain classiﬁcation is found in the combination of tactile sensors and proprioceptive joint 
+angle sensors. The classiﬁcation error is small enough to have a robot adapt the gait to the terrain and hence 
+move more robustly.</p>
+
+<p>The paper can be found <a 
+href="https://biblio.ugent.be/input/download?func=downloadFile&fileOId=4215684">here</a></p>

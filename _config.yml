@@ -1,3 +1,24 @@
-name: Tom Van de Wiele
+# Site settings
+title: Jonas Degrave
+header-img: img/home-bg.jpg
+email: Jonas.Degrave@UGent.be
+description: "Blog of Jonas Degrave. Read about my (side) projects."
+baseurl: ""
+url: "https://317070.github.io"
+twitter_username: 317070
+github_username: 317070
+# facebook_username: jonas.debraeve
+
+# Build settings
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title
+highlighter: rouge
+permalink: /:title/
+paginate: 10
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+analytics :
+  provider : google
+  google : 
+    tracking_id : 'UA-60860556-1'
+  getclicky :
+    site_id : 

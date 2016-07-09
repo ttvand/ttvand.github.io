@@ -1,0 +1,409 @@
+---
+layout:     post
+title:      "Python-twitch-stream Tutorial"
+subtitle:   "A tutorial to interact with Twitch using python"
+date:       2015-10-31 16:00:00
+author:     "317070"
+header-img: "img/post-python-bg.jpg"
+published:  true
+---
+
+Make your own twitch stream using python code!
+
+What does this tutorial cover
+=============================
+We will set up a program, which creates an interactive twitch stream. It will generate sound and color, and the users in the chat can request which sounds and which colors.
+
+We will go over this from scratch.
+
+1. First, the installation process of python-twitch-stream
+2. Creating the necessary tokens to start broadcasting on Twitch
+3. Setting up the example script
+4. Run it on Twitch
+5. ???
+6. Profit!
+
+The example handled here is very basic, but the possibilities are endless. From interactive media art over "Twitch plays X" to Twitch riding your roomba around the house.
+Using python for interfacing opens a whole new world of possibilities! I wrote this library for my art/science piece "LSD Neural Network", which received critical acclaim from international press.
+
+Prerequisites
+=============
+I'll assume you:
+
+1. have a computer running Ubuntu (or some Debian linux distribution),
+2. know how to code in python,
+3. have some experience with numpy,
+4. have some familiarity with the terminal,
+5. have some familiarity with Twitch.
+
+Installing python-twitch-stream
+===============================
+Installing python-twitch-stream is easy. First, you need to install the library:
+
+	sudo pip install python-twitch-stream
+
+Next, you will also need a recent version of ffmpeg (this was written in october 2015).
+
+	sudo add-apt-repository ppa:mc3man/trusty-media
+	sudo apt-get update && sudo apt-get install ffmpeg
+
+That's it, you're good to go. More details [here](http://python-twitch-stream.readthedocs.org/en/latest/).
+
+
+Getting the tokens
+==================
+Next, you are going to need some tokens from Twitch before they allow your computer to access there servers.
+
+1. [Create an account on Twitch](https://passport.twitch.tv/users/new)
+2. Get your streaming key. Log into your Twitch account, and go to [here](http://www.twitch.tv/youruser/dashboard/streamkey) where you will find your streaming key. Keep this with you, you will need it later on.
+3. Get your oauth key. You'll need this to access the chat. For this, go [here](https://twitchapps.com/tmi/). Allow it to have access to your account and generate an oauth key. Keep it close, you are going to need it.
+
+
+The code
+========
+
+A first version
+---------------
+
+Let us start of simple, with a small script which just sends some basic (noise) video stream to Twitch. The code is as follows:
+
+	from __future__ import print_function
+	from twitchstream.outputvideo import TwitchBufferedOutputStream
+	import argparse
+	import numpy as np
+
+	if __name__ == "__main__":
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    required = parser.add_argument_group('required arguments')
+	    required.add_argument('-s', '--streamkey',
+		                  help='twitch streamkey',
+		                  required=True)
+	    args = parser.parse_args()
+
+	    with TwitchBufferedOutputStream(
+		    twitch_stream_key=args.streamkey,
+		    width=640,
+		    height=480,
+		    fps=30.,
+		    verbose=True) as videostream:
+
+		frame = np.zeros((480, 640, 3))
+
+		while True:
+		    if videostream.get_video_frame_buffer_state() < 30:
+		        frame = np.random.rand(480, 640, 3)
+		        videostream.send_video_frame(frame)
+
+The latest verion of this code is also available [here](https://github.com/317070/python-twitch-stream/blob/master/examples/basic_video_out.py). You can run this script in the terminal with the command: 
+
+	python color.py -s <your stream key>
+
+Now, let us go over this step by step.
+
+	if __name__ == "__main__":
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    required = parser.add_argument_group('required arguments')
+	    required.add_argument('-s', '--streamkey',
+		                  help='twitch streamkey',
+		                  required=True)
+	    args = parser.parse_args()
+
+First, we make a stand-alone script, and parse some of the arguments to retrieve the streamkey.
+
+	    with TwitchBufferedOutputStream(
+		    twitch_stream_key=args.streamkey,
+		    width=640,
+		    height=480,
+		    fps=30.,
+		    verbose=True) as videostream:
+
+Next, we create a stream to communicate with twitch. We give it our stream key, along with the properties of the video (width, height and frames per second). We also make this stream verbose. When verbose, the script will pip all the output of ffmpeg to your terminal, which makes it easier to debug.
+
+		frame = np.zeros((480, 640, 3))
+
+		while True:
+		    if videostream.get_video_frame_buffer_state() < 30:
+		        frame = np.random.rand(480, 640, 3)
+		        videostream.send_video_frame(frame)
+
+Create a video frame (or image, if you will). This image contains 3 color channels (red, green and blue). The two other dimensions are respectively the height and the width we chose earlier.
+Every time the buffer of our video is about to get empty, we create a random frame and add it to the stream.
+
+There you go, it is that easy. And you already have your first video on twitch.
+
+
+A second version: adding some sound
+-----------------------------------
+
+Now, this was easy, let's add some sound to the mix. Your code should now [look like this](https://github.com/317070/python-twitch-stream/blob/master/examples/basic_video_out.py).
+
+	    with TwitchBufferedOutputStream(
+		    twitch_stream_key=args.streamkey,
+		    width=640,
+		    height=480,
+		    fps=30.,
+		    verbose=True,
+		    enable_audio=True) as videostream:
+
+		frame = np.zeros((480, 640, 3))
+
+		while True:
+		    if videostream.get_video_frame_buffer_state() < 30:
+		        frame = np.random.rand(480, 640, 3)
+		        videostream.send_video_frame(frame)
+
+		    if videostream.get_audio_buffer_state() < 30:
+		        left_audio = np.random.randn(1470)
+		        right_audio = np.random.randn(1470)
+		        videostream.send_audio(left_audio, right_audio)
+
+
+What has changed? Well, for one, we added the option
+
+	audio_enabled=True
+
+This adds an audio channel to our stream. Next, we also need to send our audio frames to Twitch:
+
+		    if videostream.get_audio_buffer_state() < 30:
+		        left_audio = np.random.randn(1470)
+		        right_audio = np.random.randn(1470)
+		        videostream.send_audio(left_audio, right_audio)
+
+As you can see, when our sound buffer runs low, we add some randomly generated noise. Audio fragments should have values between -1 and 1. Also, you may want to keep your audio in sync with your video. Take care that audio and video are buffered seperately. This means that when the second frame gets shown, you will be at audio sample 1470 (because 44100kHz / 30fps = 1470). It is not the timing when you give your frames and your audio to the stream which matters, it is the number of frames and number of samples since the beginning of the stream which determines the synchronicity between the audio and the video. This makes some things easier (such as dealing with timing) at the expense of other issues (such as dealing with external devices with their own timing).
+
+Also, sound is default stereo. If you want mono, you send the same audio to the left and right channel.
+
+There you go. Now we have a nice Twitch channel displaying static.
+
+
+A third version: adding interactivity
+-------------------------------------
+
+This is good for video, but we want to go interactive. So we need to have some interaction with the chat as well. A basic example of how to interact with the chat looks like this:
+
+	from __future__ import print_function
+	from twitchstream.outputvideo import TwitchOutputStreamRepeater
+	from twitchstream.chat import TwitchChatStream
+	import argparse
+	import time
+	import numpy as np
+
+	if __name__ == "__main__":
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    required = parser.add_argument_group('required arguments')
+	    required.add_argument('-u', '--username',
+		                  help='twitch username',
+		                  required=True)
+	    required.add_argument('-o', '--oauth',
+		                  help='twitch oauth '
+		                       '(visit https://twitchapps.com/tmi/ '
+		                       'to create one for your account)',
+		                  required=True)
+	    args = parser.parse_args()
+
+	    # Launch a verbose (!) twitch stream
+	    with TwitchChatStream(username=args.username,
+		                  oauth=args.oauth,
+		                  verbose=True) as chatstream:
+
+		# Send a message to this twitch stream
+		chatstream.send_chat_message("I'm reading this!")
+
+		# Continuously check if messages are received (every ~10s)
+		# This is necessary, if not, the chat stream will close itself
+		# after a couple of minutes (due to ping messages from twitch)
+		while True:
+		    received = chatstream.twitch_receive_messages()
+		    if received:
+		        print("received:", received)
+		    time.sleep(1)
+
+You can also find this code [here](https://raw.githubusercontent.com/317070/python-twitch-stream/master/examples/basic_chat.py). You can run this script in the terminal with the command: 
+
+	python basic_chat.py -u <your username> -o <your oauth key>
+
+So, how does this work? Again, we have the part with all the python formalities to process command line arguments. Then we create a chatstream to interact with the chat:
+
+	    with TwitchChatStream(username=args.username,
+		                  oauth=args.oauth,
+		                  verbose=True) as chatstream:
+
+For the example, it is verbose, so you can see all the messages which are sent to and received from the Twitch IRC channels. You add in your username and oauth in order to log in.
+With this chat (pun inteded), you can now send messages:
+
+		chatstream.send_chat_message("I'm reading this!")
+
+It is also important to constantly check for messages in your main loop (at least every 10 seconds). Twitch will check for activity, and log you out if you are not active on the chat anymore. This is handled automatically by the chat stream, but you need to call the function regularly enough.
+
+		while True:
+		    received = chatstream.twitch_receive_messages()
+		    if received:
+		        print("received:", received)
+		    time.sleep(1)
+
+In this simple example, we'll just print the messages we received. Great, now we have all ingredients to make our first interactive Twitch stream!
+
+A fourth version: an interactive Twitch stream
+----------------------------------------------
+
+Now, let's add everything together. In the final part of the tutorial, we'll make a video which shows a color chosen by the audience, and plays a sine wave with the frequency chosen by that audience as well. We have all our ingredients, so we just need to put the together to get [this](https://github.com/317070/python-twitch-stream/blob/master/examples/color.py):
+
+	from __future__ import print_function
+	from twitchstream.outputvideo import TwitchBufferedOutputStream
+	from twitchstream.chat import TwitchChatStream
+	import argparse
+	import time
+	import numpy as np
+
+	if __name__ == "__main__":
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    required = parser.add_argument_group('required arguments')
+	    required.add_argument('-u', '--username',
+		                  help='twitch username',
+		                  required=True)
+	    required.add_argument('-o', '--oauth',
+		                  help='twitch oauth '
+		                       '(visit https://twitchapps.com/tmi/ '
+		                       'to create one for your account)',
+		                  required=True)
+	    required.add_argument('-s', '--streamkey',
+		                  help='twitch streamkey',
+		                  required=True)
+	    args = parser.parse_args()
+
+	    with TwitchBufferedOutputStream(
+		    twitch_stream_key=args.streamkey,
+		    width=640,
+		    height=480,
+		    fps=30.,
+		    enable_audio=True,
+		    verbose=False) as videostream, \
+		TwitchChatStream(
+		    username=args.username,
+		    oauth=args.oauth,
+		    verbose=False) as chatstream:
+
+		chatstream.send_chat_message("Taking requests!")
+
+		frame = np.zeros((480, 640, 3))
+		frequency = 100
+		last_phase = 0
+
+		while True:
+
+		    received = chatstream.twitch_receive_messages()
+
+		    if received:
+		        for chat_message in received:
+		            print("Got a message '%s' from %s" % (
+		                chat_message['message'],
+		                chat_message['username']
+		            ))
+		            if chat_message['message'] == "red":
+		                frame[:, :, :] = np.array(
+		                    [1, 0, 0])[None, None, :]
+		            elif chat_message['message'] == "green":
+		                frame[:, :, :] = np.array(
+		                    [0, 1, 0])[None, None, :]
+		            elif chat_message['message'] == "blue":
+		                frame[:, :, :] = np.array(
+		                    [0, 0, 1])[None, None, :]
+		            elif chat_message['message'].isdigit():
+		                frequency = int(chat_message['message'])
+
+		    if videostream.get_video_frame_buffer_state() < 30:
+		        videostream.send_video_frame(frame)
+
+		    elif videostream.get_audio_buffer_state() < 30:
+		        x = np.linspace(last_phase,
+		                        last_phase +
+		                        frequency*2*np.pi/videostream.fps,
+		                        int(44100 / videostream.fps) + 1)
+		        last_phase = x[-1]
+		        audio = np.sin(x[:-1])
+		        videostream.send_audio(audio, audio)
+
+		    else:
+		        time.sleep(.001)
+
+You can run this script in the terminal with the command: 
+
+	python color.py -u <your username> -o <your oauth key> -s <your stream key>
+
+Again, everything is pretty simple. First, we have our regular python stuff to process imports and arguments. Then, we create our chat and video stream (with audio!).
+
+	    with TwitchBufferedOutputStream(
+		    twitch_stream_key=args.streamkey,
+		    width=640,
+		    height=480,
+		    fps=30.,
+		    enable_audio=True,
+		    verbose=False) as videostream, \
+		TwitchChatStream(
+		    username=args.username,
+		    oauth=args.oauth,
+		    verbose=False) as chatstream:
+
+Notice, oauth is for chat, streaming key is for video. Also, we remove the verbosity to have a clean terminal.
+
+Next, we process all the messages we receive from the chat to adapt the parameters.
+
+		    received = chatstream.twitch_receive_messages()
+
+		    if received:
+		        for chat_message in received:
+		            print("Got a message '%s' from %s" % (
+		                chat_message['message'],
+		                chat_message['username']
+		            ))
+		            if chat_message['message'] == "red":
+		                frame[:, :, :] = np.array(
+		                    [1, 0, 0])[None, None, :]
+		            elif chat_message['message'] == "green":
+		                frame[:, :, :] = np.array(
+		                    [0, 1, 0])[None, None, :]
+		            elif chat_message['message'] == "blue":
+		                frame[:, :, :] = np.array(
+		                    [0, 0, 1])[None, None, :]
+		            elif chat_message['message'].isdigit():
+		                frequency = int(chat_message['message'])
+
+We loop over all the received messages, and change either the frame color (which is in RGB) or the frequency (which is in Hz). Now, there are a couple of important things here:
+
+1. Make sure your program never crashes on user input. Process everything nicely, because you cannot know what to expect. Your users can (and will) write anything into the chat, make sure you don't hiccup on that. (I have first hand experience with this, as my stream crashed on _badger+badger+badger+badger+badger+badger+badger+badger+badger+badger+badger+badger+mushroom+mushroom_, which was longer than I expected.)
+2. Now we are processing all user input. When your stream gets too big, you probably want some kind of democratic system where you count the votes, or pick someone at random. The possibilities are endless, but think about it beforehand.
+3. Communicate the required syntax _clearly_ with your viewers. They have no error reports to go by. You probably want to give them some feedback though. This is possible by chatting back or by putting text on your video.
+
+Next, we send our imagery to the video stream:
+
+		    if videostream.get_video_frame_buffer_state() < 30:
+		        videostream.send_video_frame(frame)
+
+		    elif videostream.get_audio_buffer_state() < 30:
+		        x = np.linspace(last_phase,
+		                        last_phase +
+		                        frequency*2*np.pi/videostream.fps,
+		                        int(44100 / videostream.fps) + 1)
+		        last_phase = x[-1]
+		        audio = np.sin(x[:-1])
+		        videostream.send_audio(audio, audio)
+
+		    else:
+		        time.sleep(.001)
+
+See how we took care to keep audio and video in sync? The audio fragments are exactly the right size, such that the 30 fragments of audio in the audio buffer will take the same time to play as the 30 video frames in the video frame buffer. If we would not keep it in sync, the delay between the chat and the audio would be different to the delay between the chat and the video.
+
+And that's it! Feel free to create your own interactive video streams. As you see, most of the hard work is done for you in the library, all you need to do now is get creative and make your thing. The world is at your feet, you can create stuff which interacts with thousands upon thousands of people, while Twitch deals to make sure you don't have to worry about overloading your equipment with the traffic.
+
+???
+===
+
+Some small tips and tricks:
+
+1. Make sure to make your channel low latency (you can find this option on your Twitch dashboard). This way, the delay between when the user types something in the chat and they get feedback in the video, is lower.
+2. Keep your buffers as empty as possible, but not any more. You never want to have buffer underflows, or audio and video will go out of sync. However, the fuller the buffer, the higher the delay between the chat and a reaction in your video.
+3. If you have problems, ask! If you did a project with this software, feel free to share it! If you know how to improve this library, please post pull requests!
+
+Profit!
+=======
+Now go forth and make that horror game which is played by thousands of people simultaneously! Or that peace of art where thousands upon thousand of people can interactively sign up. Or that remote controlled robot. Go create!

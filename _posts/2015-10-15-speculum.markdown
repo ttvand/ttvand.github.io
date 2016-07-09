@@ -1,0 +1,15 @@
+---
+layout:     post
+title:      "LSD-net presented at Art Festival"
+subtitle:   "@Speculum Artium, Trbovlje, Slovenia"
+date:       2015-10-15 16:00:00
+author:     "317070"
+header-img: "img/post-speculum-bg.jpg"
+published:  true
+---
+
+I was contacted earlier this year to present the LSD-net at an art festival. Apparently, some people thought it was interesting enough to feature as a piece of art, rather than a demonstration of scientific possibilities. It has been an interesting experience, which allowed discussion with the other artists on what is missing and how this technology can be improved even further.
+
+Interestingly, after my short 5 minute explanation, an artist made a remark that the network should be attention based. She was convinced that since humans have a focus, it would probably work better if the network has as well. This is of course very similar to where the current state of the art neural networks are going, with spatial transformer networks and DRAW-like systems.
+
+More information on the Art Festival is available [here](http://speculumartium.si/).

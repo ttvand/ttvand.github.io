@@ -1,0 +1,20 @@
+---
+layout:     post
+title:      "Publishes article on transfer learning in robotics"
+subtitle:   "My research on using transfer learning for legged robots got published."
+date:       2015-03-16 01:00:00
+author:     "317070"
+header-img: "img/post-transfer-bg.jpg"
+published:  true
+---
+
+<p>Learning new gaits for compliant robots is a challenging multi-dimensional optimization task. Furthermore, 
+to ensure optimal performance, the optimization process must be repeated for every variation in the 
+environment, e.g. for every change in inclination of the terrain. This is unfortunately not possible using 
+current approaches, since the time required for the optimization is simply too high. Hence, a sub-optimal gait is often used. The goal in this manuscript is to reduce the learning time of a particle swarm algorithm, such that the robot’s gaits can be optimized over a wide 
+variety of terrains. To facilitate this, we use transfer learning by sharing knowledge about gaits between the 
+different environments. Our ﬁndings indicate that using transfer learning, new robust gaites can be discovered 
+faster compared to traditional methods that learn a gait for each environment independently.
+</p>
+
+<p>The full article is available <a href="https://biblio.ugent.be/input/download?func=downloadFile&fileOId=5819149">here</a></p>

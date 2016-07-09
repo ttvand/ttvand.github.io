@@ -1,0 +1,19 @@
+---
+layout:     post
+title:      "LSD-net was featured in the New Scientist"
+subtitle:   "and some other media, like the Guardian, der Spiegel and Atlas Obscura"
+date:       2015-10-15 16:00:00
+author:     "317070"
+header-img: "img/post-new-bg.jpg"
+published:  true
+---
+
+I was a big fan of the New Scientist growing up, I might even not have become such a new scientist if it were not for the great, digging stories they provided to satisfy my young, curious mind. Especially not understanding half of the detail provided (and me being only a high school student) made me dig deeper in subjects across all fields of science. And now, so many years later, I got called for an interview!
+
+I won't put the resulting article here, but I'm very flatter to have been featured in the article "Deep Thought, The irresistible rise of neural networks". Due to copyright reasons, I will only put a couple of quotes underneath, the full article is available [here](https://www.newscientist.com/article/mg22730291-900-the-rapid-rise-of-neural-networks-and-why-theyll-rule-our-world/).
+
+> Watching 317070's livestream already gives the uncanny sense that you are looking at a humanlike consciousness at work. Each of its images is unique, generated through a process that even its creator doesn't really understand.
+
+>I am watching it have a very odd dream -- psychedelic visions of brain tissue folds, interspersed with chunks of coral reef. The dreamer in question is an artificial intelligence, one that live-streams from a computer on the ground floor of the Techicum building in Ghent University, Belgium. This vision has been conjured up after a viewer in the chat sidebar suggests "brain coral" as a topic. It's a fun distraction -- and thousands of people have logged on to watch. But beyond that, the bot is a visual demonstration of a technology that is finally coming of age: neural networks.
+
+Other news media include [the Guardian](http://www.theguardian.com/technology/2015/jun/25/watch-android-dream-electric-sheep-live), [Der Spiegel](http://www.spiegel.de/netzwelt/games/twitch-projekt-nutzer-fuettern-lsd-rechner-mit-begriffen-a-1040647.html), [Atlas Obscura](http://www.atlasobscura.com/articles/livestreaming-a-computer-s-dreams) and [Gawker](http://internet.gawker.com/this-is-what-it-looks-like-when-a-computer-hallucinate-1713888679#).

@@ -1,101 +1,16 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
-  <head>
-     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-     <title>
-       {% if page.title %}
-         {{ page.title }} //
-       {% endif %}
-       Tom Van de Wiele
-     </title>
-     <meta name="author" content="Tom Van de Wiele" />
-     {% if page.summary %}
-       <meta namne="description" content="{{ page.summary }}" />
-     {% endif %}
-     <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
-     <link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
+{% include head.html %}
 
-     {% for css in page.css %}
-       <link rel="stylesheet" href="{{ css }}" type="text/css" />
-     {% endfor %}
-  </head>
-  <body>
+<body>
 
-    <div id="site">
-      <div id="search_area" style="display: none">
-        <label for="search" style="display: none">Search</label>
-        <img src="http://www.famfamfam.com/lab/icons/silk/icons/cancel.png" alt="X"/>
-        <input id="search" />
-      </div>
+    {% include nav.html %}
 
-      <h1><a href="/">Tom Van de Wiele</a></h1>
+    {{ content }}
 
-      <div class="clear"></div>
+    {% include footer.html %}
 
-      <div id="sidebar" class="vcard">
-        <h3>Me</h3>
-        <dl id="contact">
-          <dt>Name</dt>
-          <dd><a class="fn url" href="/">Tom Van de Wiele</a></dd>
+</body>
 
-          <dt>Email</dt>
-          <dd class="email"><a href="mailto:tvdwiele@gmail.com">tvdwiele@gmail.com</a></dd>
-
-          <dt>Company</dt>
-          <dd class="org"><a href="http://www.eastman.com/">Eastman</a></dd>
-        </dl>
-        <h3>Links</h3>
-        <ul id="profiles">
-          <li><a href="http://github.com/ttvand">GitHub</a></li>
-          <li><a href="https://www.kaggle.com/tvdwiele">Kaggle</a></li>
-        </ul>
-
-         <div class="adr">
-          <span class="locality">Gent</span>
-
-          <span class="country-name">Belgium</span>
-
-         </div>
-      </div>
-
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6/prototype.js"></script>
-
-      <div id="content">
-        {{ content }}
-      </div>
-
-      <div class="clear"></div>
-
-    </div>
-
-    {% for js in page.javascript %}
-      <script type="text/javascript" src="{{ js }}"></script>
-    {% endfor %}
-
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-      <script type="text/javascript">
-      try {
-      var pageTracker = _gat._getTracker("UA-254246-10");
-      pageTracker._trackPageview();
-      } catch(err) {}
-    </script>
-
-    <script type="text/javascript">
-      (function() {
-        var t   = document.createElement('script');
-        t.type  = 'text/javascript';
-        t.async = true;
-        t.id    = 'gauges-tracker';
-        t.setAttribute('data-site-id',
-                       '4dd0582ef5a1f51b35000002');
-        t.src = '//secure.gaug.es/track.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(t, s);
-      })();
-    </script>
-  </body>
 </html>

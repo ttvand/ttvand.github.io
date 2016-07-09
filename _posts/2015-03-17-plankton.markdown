@@ -1,0 +1,17 @@
+---
+layout:     post
+title:      "Wins a kaggle competition"
+subtitle:   "With our lab, we won the 100.000$ prize for classifying plankton using deep learning."
+date:       2015-03-17 01:00:00
+author:     "317070"
+header-img: "img/post-plankton-bg.jpg"
+published:  true
+---
+
+<p>This night we heard we won the kaggle plankton competition. Our approach can be found here: <a>http://benanne.github.io/2015/03/17/plankton.html</a></p>
+
+<p>My main contribution in the final solution was the gif of the animated plankton. I have done a lot of exploratory work in the early stages of the contest, most of which were superseded by even better approaches later on. What you see is an affine transformation which is being optimized for maximum certainty, by finding the derivative through the entire stack of the convolutional neural network.</p>
+
+<iframe src="http://gfycat.com/ifr/BlandEasyHamadryad" frameborder="0" scrolling="no" width="840" height="168" style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ></iframe>
+
+<p>In this context and with the limited time, it was not performing well enough to have it contribute to the final score. I will however research further on this idea and hope to publish more soon.</p>
