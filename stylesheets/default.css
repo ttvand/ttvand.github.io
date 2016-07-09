@@ -71,7 +71,7 @@ h1 a, h1 a:link, h1 a:visited {
 }
 
 #content {
-  width: 800px;
+  width: 700px;
   padding: 0 20px 20px 20px;
 }
 #content ul {
@@ -121,7 +121,7 @@ pre.highlight {
 }
 
 #search_area {
-  width: 200px;
+  width: 80px;
   float: right;
   margin: 19px 50px;
   position: relative;
