@@ -1,11 +1,11 @@
 # Site settings
-title: Jonas Degrave
+title: Tom Van de Wiele
 header-img: img/home-bg.jpg
-email: Jonas.Degrave@UGent.be
-description: "Blog of Jonas Degrave. Read about my (side) projects."
+email: tvdwiele@gmail.com
+description: "Blog of Tom Van de Wiele. Read about my projects."
 baseurl: ""
-url: "https://317070.github.io"
-twitter_username: 317070
+url: "https://ttvand.github.io"
+kaggle_username: tvdwiele
 github_username: 317070
 # facebook_username: jonas.debraeve
 
