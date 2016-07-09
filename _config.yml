@@ -1,2 +1,3 @@
-name: Hank Quinlan, Horrible Cop
+name: Tom Van de Wiele
 	markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
