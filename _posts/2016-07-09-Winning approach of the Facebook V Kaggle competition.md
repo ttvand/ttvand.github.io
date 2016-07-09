@@ -15,6 +15,10 @@ The [Facebook V: Predicting Check Ins data science competition](https://www.kagg
 
 ## Introduction
 
+{% include image.html url="/img/FB5_banner.png" description="Hello world" %}
+
+{% include image.html url="/img/kaggle_screenshot-min.png" description="Hello world" %}
+
 ### A
 
 ### B
