@@ -19,9 +19,7 @@ The [Facebook V: Predicting Check Ins data science competition](https://www.kagg
 
 {% include image.html url="/img/kaggle_screenshot-min.png" description="Hello world" %}
 
-### A
-
-### B
+## Exploratory analysis
 
 ## Candidate selection 1
 
