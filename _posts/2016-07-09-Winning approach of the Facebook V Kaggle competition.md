@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Facebook V: Predicting Check Ins"
-subtitle:   "I won my first Kaggle competition!"
+subtitle:   "I won the Kaggle competition!"
 date:       2016-07-09 00:00:00
 author:     "Tom Van de Wiele"
 header-img: "img/FBCheckinDark.jpg"
