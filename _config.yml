@@ -7,7 +7,6 @@ baseurl: ""
 url: "https://ttvand.github.io"
 kaggle_username: tvdwiele
 github_username: 317070
-# facebook_username: jonas.debraeve
 
 # Build settings
 markdown: kramdown
