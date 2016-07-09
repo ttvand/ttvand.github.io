@@ -1,28 +1,101 @@
 <!DOCTYPE html>
-	<html>
-		<head>
-			<title>{{ page.title }}</title>
-			<!-- link to main stylesheet -->
-			<link rel="stylesheet" type="text/css" href="/css/main.css">
-		</head>
-		<body>
-			<nav>
-	    		<ul>
-	        		<li><a href="/">Home</a></li>
-		        	<li><a href="/about">About</a></li>
-	        		<li><a href="/blog">Blog</a></li>
-	    		</ul>
-			</nav>
-			<div class="container">
-			
-			{{ content }}
-			
-			</div><!-- /.container -->
-			<footer>
-	    		<ul>
-	        		<li><a href="mailto:tvdwiele@gmail.com">email</a></li>
-	        		<li><a href="https://github.com/ttvand">github.com/ttvand</a></li>
-				</ul>
-			</footer>
-		</body>
-	</html>
+
+<html>
+  <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+     <title>
+       {% if page.title %}
+         {{ page.title }} //
+       {% endif %}
+       Tom Van de Wiele
+     </title>
+     <meta name="author" content="Tom Van de Wiele" />
+     {% if page.summary %}
+       <meta namne="description" content="{{ page.summary }}" />
+     {% endif %}
+     <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+     <link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
+
+     {% for css in page.css %}
+       <link rel="stylesheet" href="{{ css }}" type="text/css" />
+     {% endfor %}
+  </head>
+  <body>
+    <a href="http://github.com/ttvand"><img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png" alt="Fork me on GitHub" /></a>
+
+    <div id="site">
+      <div id="search_area" style="display: none">
+        <label for="search" style="display: none">Search</label>
+        <img src="http://www.famfamfam.com/lab/icons/silk/icons/cancel.png" alt="X"/>
+        <input id="search" />
+      </div>
+
+      <h1><a href="/">Tom Van de Wiele</a></h1>
+
+      <div class="clear"></div>
+
+      <div id="sidebar" class="vcard">
+        <h3>Me</h3>
+        <dl id="contact">
+          <dt>Name</dt>
+          <dd><a class="fn url" href="/">Tom Van de Wiele</a> / <span class="nickname">tvdwiele</span></dd>
+
+          <dt>Email</dt>
+          <dd class="email"><a href="mailto:tvdwiele@gmail.com">tvdwiele@gmail.com</a></dd>
+
+          <dt>Company</dt>
+          <dd class="org"><a href="http://www.eastman.com/">Eastman</a></dd>
+        </dl>
+        <h3>And then some</h3>
+        <ul id="profiles">
+          <li><a href="http://github.com/ttvand">GitHub</a></li>
+        </ul>
+
+         <div class="adr">
+          <span class="locality">Gent</span>
+
+          <span class="country-name">Belgium</span>
+
+         </div>
+      </div>
+
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6/prototype.js"></script>
+
+      <div id="content">
+        {{ content }}
+      </div>
+
+      <div class="clear"></div>
+
+    </div>
+
+    {% for js in page.javascript %}
+      <script type="text/javascript" src="{{ js }}"></script>
+    {% endfor %}
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("UA-254246-10");
+      pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+
+    <script type="text/javascript">
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id',
+                       '4dd0582ef5a1f51b35000002');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>
