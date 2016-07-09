@@ -5,6 +5,7 @@ subtitle:   "I won my first Kaggle competition!"
 date:       2016-07-09 00:00:00
 author:     "Tom Van de Wiele"
 header-img: "img/FBCheckinDark.jpg"
+comments: true
 ---
 
 
