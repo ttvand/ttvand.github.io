@@ -41,7 +41,13 @@ A ranked list of the top three most likely places is expected for all test recor
 
 ## <a name="explorAnalysis"><a> Exploratory analysis
 
+Location analysis of the train check ins revealed interesting patterns between the variation in x and y. There appears to be way more variation in x than in y. It was suggested that this could be related to the streets of the simulated world. The difference in variation between x and y is however different for all places and there is no obvious spatial (x-y) pattern in this relationship.
 
+It was quickly established by the community that time is measured in minutes and could thus be converted to relative hours and days of the week. This means that the train data covers 546 days and the test data spans 153 days. All places seem to live in independent time zones with clear hourly and daily patterns. No spatial pattern was found with respect to the time patterns.
+
+Accuracy was by far the hardest feature to tackle. It was expected that it would be clearly correlated with the variation in x and y but the pattern is not as obvious. Halfway through the competition I cracked the code and the details will be discussed in the [Feature engineering](#featEng) section.
+
+I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Facebook-V/) to research these interactions for a subset of the places. Feel free to explore the data yourself!
 
 ## <a name="probDef"><a> Problem definition
 
@@ -57,6 +63,8 @@ A ranked list of the top three most likely places is expected for all test recor
 
 ### Accuracy
 
+### Z-scores
+
 ### Most important features
 
 {% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
@@ -68,6 +76,8 @@ A ranked list of the top three most likely places is expected for all test recor
 ## <a name="secondLL"><a> Second level learners
 
 ## <a name="conclusion"><a> Conclusion
-Ideas to improve approach & LB plot
+I really enjoyed working on this competition. The data showed various noisy and time dependent patterns with 
 
-{% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (mean MAP@3) - two teams stand out from the pack" %}
+{% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
+
+
