@@ -5,8 +5,8 @@ email: tvdwiele@gmail.com
 description: "Blog of Tom Van de Wiele. Read about my projects."
 baseurl: ""
 url: "https://ttvand.github.io"
-kaggle_username: tvdwiele
-github_username: 317070
+facebook_username: tvdewiele
+github_username: ttvand
 
 # Build settings
 markdown: kramdown
