@@ -27,6 +27,8 @@ This blog post will cover all sections to go from the raw data to the winning su
 * *[Second level learners](#secondLL)*
 * *[Conclusion](#conclusion)*
 
+The source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This (thread)[https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution] on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
+
 ## <a name="introduction"><a> Introduction
 
 {% include image.html url="/img/FB5_banner.png" description="Competition banner" %}
@@ -51,7 +53,10 @@ I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Faceboo
 
 ## <a name="probDef"><a> Problem definition
 
+
 ## <a name="strategy"><a> Strategy
+
+{% include image.html url="/img/Strategy.png" description="High level strategy" %}
 
 ## <a name="candidateSel1"><a> Candidate selection 1
 
@@ -76,8 +81,11 @@ I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Faceboo
 ## <a name="secondLL"><a> Second level learners
 
 ## <a name="conclusion"><a> Conclusion
-I really enjoyed working on this competition. The data showed various noisy and time dependent patterns with 
-
+The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the [forum](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums). Many others also contributed valuable insights.
 {% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
+
+I really enjoyed working on this competition even though it was already one of the busiest periods of my life. The competition was launched while I was in the middle of writing my Master's Thesis in statistics in combination with a full time job. The data shows many interesting noisy and time dependent patterns which motivated me to play with the data before and after work. It was definitely worth every second of my time! I was inspired by the work of other [Kaggle winners](http://blog.kaggle.com/2014/08/01/learning-from-the-best/) and succesfully implemented my first two level model. Winning the competition is a nice extra but it's even better to have learnt a lot from the other competitors, thank you all!
+
+
 
 
