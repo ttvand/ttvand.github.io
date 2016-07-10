@@ -27,7 +27,7 @@ This blog post will cover all sections to go from the raw data to the winning su
 * *[Second level learners](#secondLL)*
 * *[Conclusion](#conclusion)*
 
-The source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This (thread)[https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution] on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
+The source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This [thread](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution) on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
 
 ## <a name="introduction"><a> Introduction
 
