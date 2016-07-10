@@ -64,9 +64,9 @@ The given raw train data is split in two chronological parts, with a similar rat
 
 The three raw data groups (train, validation and test) are first sampled down into batches that are as large as possible but can still be modeled with the available memory. I ended up using batches of approximately 30,000 observations on a 48GB workstation. The sampling process is fully random and results in train/validation batches that span the entire 138 days train range.
 
-Next, a set of models is built to reduce the number of candidates to 20 using 15 XGBoost models in the second candidate selection step. The conditional probability P(place_match|features) is modeled for all ~30,000*100 place-observation combinations and the mean predicted probability of the 15 models is used to select the top 20 candidates for each observation. These models use features that combine place and observation measures of the summary period. 
+Next, a set of models is built to reduce the number of candidates to 20 using 15 XGBoost models in the second candidate selection step. The conditional probability P(place_match&#124;features) is modeled for all ~30,000*100 place-observation combinations and the mean predicted probability of the 15 models is used to select the top 20 candidates for each observation. These models use features that combine place and observation measures of the summary period. 
 
-The same features are used to generate the first level learners. Each of the 100 first level learners are again XGBoost models that are built using ~30,000*20 feature-place_match pairs. 
+The same features are used to generate the first level learners. Each of the 100 first level learners are again XGBoost models that are built using ~30,000*20 feature-place_match pairs. The predicted probabilities P(place_match&#124;features) are used as features of the second level learners along with 21 manually selected features. The candidates are ordered using the mean predicted probabilities of the 30 second level XGBoost learners.
 
 All models are built using different train batches. Local validation is used to tune the model hyperparameters.
 
