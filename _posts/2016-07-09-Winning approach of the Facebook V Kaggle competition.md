@@ -56,7 +56,7 @@ I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Faceboo
 
 ## <a name="strategy"><a> Strategy
 
-{% include image.html url="/img/Strategy2.png" description="High level strategy" %}
+{% include image.html url="/img/Strategy3.png" description="High level strategy" %}
 
 ## <a name="candidateSel1"><a> Candidate selection 1
 
