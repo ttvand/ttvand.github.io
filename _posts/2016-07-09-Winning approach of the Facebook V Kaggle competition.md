@@ -45,24 +45,37 @@ A ranked list of the top three most likely places is expected for all test recor
 
 Location analysis of the train check ins revealed interesting patterns between the variation in x and y. There appears to be way more variation in x than in y. It was suggested that this could be related to the streets of the simulated world. The difference in variation between x and y is however different for all places and there is no obvious spatial (x-y) pattern in this relationship.
 
-It was quickly established by the community that time is measured in minutes and could thus be converted to relative hours and days of the week. This means that the train data covers 546 days and the test data spans 153 days. All places seem to live in independent time zones with clear hourly and daily patterns. No spatial pattern was found with respect to the time patterns.
+It was quickly established by the community that time is measured in minutes and could thus be converted to relative hours and days of the week. This means that the train data covers 546 days and the test data spans 153 days. All places seem to live in independent time zones with clear hourly and daily patterns. No spatial pattern was found with respect to the time patterns. There are however two clear dips in the number of check ins during the train period.
 
 Accuracy was by far the hardest feature to tackle. It was expected that it would be clearly correlated with the variation in x and y but the pattern is not as obvious. Halfway through the competition I cracked the code and the details will be discussed in the [Feature engineering](#featEng) section.
 
 I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Facebook-V/) to research these interactions for a subset of the places. Feel free to explore the data yourself!
 
 ## <a name="probDef"><a> Problem definition
-The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single model in order to avoid to end up with a model with a high variance. The lack of clear spatial patterns in the exploratory analysis supports this approach.
+The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. It makes much sense to make use of the spatial information since this shows the most obvious and strong pattern for the different places. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single binary classification model in order to avoid to end up with a model with a high variance. The lack of any major spatial patterns in the exploratory analysis supports this approach.
 
 ## <a name="strategy"><a> Strategy
 
-Generating a single classifier for all places would be infeasible even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only calculated for a set of place candidates. A simplification of the overall strategy is shown below:
+Generating a single classifier for all place-observation combinations would be infeasible even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only modeled for a set of place candidates. A simplification of the overall strategy is shown below
 
 {% include image.html url="/img/Strategy4.png" description="High level strategy" %}
 
+The given raw train data is split in two chronological parts, with a similar ratio as the ratio between the train and test data. The summary period contains all given train observations of the first 408 days (minutes 0-587158). The second part of the given train data contains the next 138 days and will be referred to as the train/validation data from now on. The test data spans 153 days as mentioned before.
+
+The three raw data groups (train, validation and test) are first sampled down into batches that are as large as possible but can still be modeled with the available memory. I ended up using batches of approximately 30,000 observations on a 48GB workstation. The sampling process is fully random and results in train/validation batches that span the entire 138 days train range.
+
+Next, a set of models is built to reduce the number of candidates to 20 using 15 XGBoost models in the second candidate selection step. The conditional probability P(place_match|features) is modeled for all ~30,000*100 place-observation combinations and the mean predicted probability of the 15 models is used to select the top 20 candidates for each observation. These models use features that combine place and observation measures of the summary period. 
+
+The same features are used to generate the first level learners. Each of the 100 first level learners are again XGBoost models that are built using ~30,000*20 feature-place_match pairs. 
+
+All models are built using different train batches. Local validation is used to tune the model hyperparameters.
+
 ## <a name="candidateSel1"><a> Candidate selection 1
+The first candidate selection step reduces the number of potential classes from >100K to 100 by considering nearest neighbors of the observations. I considered the neighbor counts of the 2500 nearest neighbors where y variations are 2.5 times more important than x variations. Ties in the neighbor counts are resolved by the mean time difference since the observations. Resolving ties with the mean time difference is motivated by the shifts in popularity of the places. 
 
 ## <a name="featEng"><a> Feature engineering
+
+### Feature engineering strategy
 
 ### Location
 
@@ -83,8 +96,13 @@ Generating a single classifier for all places would be infeasible even with a po
 ## <a name="secondLL"><a> Second level learners
 
 ## <a name="conclusion"><a> Conclusion
-The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the [forum](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums). Many others also contributed valuable insights.
+The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the [forum](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums). Many others also contributed valuable insights.
+
 {% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
+
+Running all steps on my 48GB workstation would take about a month. That seems like a ridiculously long time but it is explained by the extended computation time of the nearest neighbor features. While calculating the NN features I was continuously working on other parts of the workflow so speeding the NN logic up would not have resulted in a better final score.
+
+Generating a ~.62 score could however be achieved in about two weeks by focusing on the most relevant NN features. I would suggest to consider 3 of the 7 distance constants (1, 2.5 and 4) and omit the mid KNN features. Cutting the first level models from 100 to 10 and the second level models from 30 to 5 would also not result in a strong performance decrease (estimated decrease of 0.1%) and cut the computation time to less than a week. You could of course run the logic on multiple instances and further speed things up.
 
 I really enjoyed working on this competition even though it was already one of the busiest periods of my life. The competition was launched while I was in the middle of writing my Master's Thesis in statistics in combination with a full time job. The data shows many interesting noisy and time dependent patterns which motivated me to play with the data before and after work. It was definitely worth every second of my time! I was inspired by the work of other [Kaggle winners](http://blog.kaggle.com/2014/08/01/learning-from-the-best/) and succesfully implemented my first two level model. Winning the competition is a nice extra but it's even better to have learnt a lot from the other competitors, thank you all!
 
