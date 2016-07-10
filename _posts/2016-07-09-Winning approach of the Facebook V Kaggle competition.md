@@ -52,9 +52,11 @@ Accuracy was by far the hardest feature to tackle. It was expected that it would
 I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Facebook-V/) to research these interactions for a subset of the places. Feel free to explore the data yourself!
 
 ## <a name="probDef"><a> Problem definition
-
+The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single model in order to avoid to end up with a model with a high variance. The lack of clear spatial patterns in the exploratory analysis supports this approach.
 
 ## <a name="strategy"><a> Strategy
+
+Generating a single classifier for all places would be infeasible even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only calculated for a set of place candidates. A simplification of the overall strategy is shown below:
 
 {% include image.html url="/img/Strategy4.png" description="High level strategy" %}
 
