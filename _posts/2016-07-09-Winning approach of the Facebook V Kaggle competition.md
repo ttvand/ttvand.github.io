@@ -10,7 +10,7 @@ comments: true
 
 
 
-The [Facebook V: Predicting Check Ins data science competition](https://www.kaggle.com/c/facebook-v-predicting-check-ins) where the goal was to predict which place a person would like to check in to has just ended. I participated with the goal of learning as much as possible and maybe aim for a top 10% since this was my first serious Kaggle competition attempt. I managed to exceed all expections and finish 1st out of 1212 participants! In this post, I’ll explain my approach.
+The <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/" target="_blank">Facebook V: Predicting Check Ins data science competition</a> where the goal was to predict which place a person would like to check in to has just ended. I participated with the goal of learning as much as possible and maybe aim for a top 10% since this was my first serious Kaggle competition attempt. I managed to exceed all expections and finish 1st out of 1212 participants! In this post, I’ll explain my approach.
 
 ## Overview
 
@@ -27,7 +27,7 @@ This blog post will cover all sections to go from the raw data to the winning su
 * *[Second level learners](#secondLL)*
 * *[Conclusion](#conclusion)*
 
-The R source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This [thread](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution) on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
+The R source code is available on <a href="https://github.com/ttvand/Facebook-V/" target="_blank">GitHub</a>. This <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution/" target="_blank">thread</a> on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
 
 ## <a name="introduction"><a> Introduction
 
@@ -49,7 +49,7 @@ It was quickly established by the community that time is measured in minutes and
 
 Accuracy was by far the hardest feature to tackle. It was expected that it would be clearly correlated with the variation in x and y but the pattern is not as obvious. Halfway through the competition I cracked the code and the details will be discussed in the [Feature engineering](#featEng) section.
 
-I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Facebook-V/) to research these interactions for a subset of the places. Feel free to explore the data yourself!
+I wrote an <a href="https://tvdwiele.shinyapps.io/Facebook-V/" target="_blank">interactive Shiny application</a> to research these interactions for a subset of the places. Feel free to explore the data yourself!
 
 ## <a name="probDef"><a> Problem definition
 The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. It makes much sense to make use of the spatial information since this shows the most obvious and strong pattern for the different places. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single binary classification model in order to avoid to end up with many high variance models. The lack of any major spatial patterns in the exploratory analysis supports this approach.
@@ -61,6 +61,8 @@ Generating a single classifier for all place-observation combinations would be i
 {% include image.html url="/img/Strategy4.png" description="High level strategy" %}
 
 The given raw train data is split in two chronological parts, with a similar ratio as the ratio between the train and test data. The summary period contains all given train observations of the first 408 days (minutes 0-587158). The second part of the given train data contains the next 138 days and will be referred to as the train/validation data from now on. The test data spans 153 days as mentioned before.
+
+The summary period is used to generate train and validation features and the given train data is used to generate the same features for the test data. 
 
 The three raw data groups (train, validation and test) are first sampled down into batches that are as large as possible but can still be modeled with the available memory. I ended up using batches of approximately 30,000 observations on a 48GB workstation. The sampling process is fully random and results in train/validation batches that span the entire 138 days train range.
 
@@ -78,7 +80,7 @@ The nearest neighbor counts are calculated efficiently by splitting up the data 
 ## <a name="featEng"><a> Feature engineering
 
 ### Feature engineering strategy
-Three weeks into the competition, I climbed to the top of the public leaderboard with about 50 features. Ever since I kept thinking of new features to capture the underlying patterns of the data. I also added features that are similar to the most important features in order to capture the more subtle patterns. The final model contains 430 numeric features and this section is intended to discuss the most important ones.
+Three weeks into the eight week competition, I climbed to the top of the public leaderboard with about 50 features. Ever since I kept thinking of new features to capture the underlying patterns of the data. I also added features that are similar to the most important features in order to capture the more subtle patterns. The final model contains 430 numeric features and this section is intended to discuss the most important ones.
 
 All features are rescaled if needed in order to result in similar interpretations for the train and test features.
 
@@ -108,7 +110,7 @@ The first level learners are very similar to the second candidate selection mode
 
 
 ## <a name="conclusion"><a> Conclusion
-The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the [forum](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums). Many others also contributed valuable insights.
+The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/" target="_blank">forum</a>. Many others also contributed valuable insights.
 
 {% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
 
@@ -116,7 +118,7 @@ Running all steps on my 48GB workstation would take about a month. That seems li
 
 Generating a ~.62 score could however be achieved in about two weeks by focusing on the most relevant NN features. I would suggest to consider 3 of the 7 distance constants (1, 2.5 and 4) and omit the mid KNN features. Cutting the first level models from 100 to 10 and the second level models from 30 to 5 would also not result in a strong performance decrease (estimated decrease of 0.1%) and cut the computation time to less than a week. You could of course run the logic on multiple instances and further speed things up.
 
-I really enjoyed working on this competition even though it was already one of the busiest periods of my life. The competition was launched while I was in the middle of writing my Master's Thesis in statistics in combination with a full time job. The data shows many interesting noisy and time dependent patterns which motivated me to play with the data before and after work. It was definitely worth every second of my time! I was inspired by the work of other [Kaggle winners](http://blog.kaggle.com/2014/08/01/learning-from-the-best/) and succesfully implemented my first two level model. Winning the competition is a nice extra but it's even better to have learnt a lot from the other competitors, thank you all!
+I really enjoyed working on this competition even though it was already one of the busiest periods of my life. The competition was launched while I was in the middle of writing my Master's Thesis in statistics in combination with a full time job. The data shows many interesting noisy and time dependent patterns which motivated me to play with the data before and after work. It was definitely worth every second of my time! I was inspired by the work of other <a href="http://blog.kaggle.com/2014/08/01/learning-from-the-best/" target="_blank">Kaggle winners</a>and succesfully implemented my first two level model. Winning the competition is a nice extra but it's even better to have learnt a lot from the other competitors, thank you all!
 
 
 
