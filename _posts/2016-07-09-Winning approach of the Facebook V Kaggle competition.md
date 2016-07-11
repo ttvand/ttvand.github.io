@@ -90,20 +90,26 @@ All features are rescaled if needed in order to result in similar interpretation
 
 The major share of my 430 features is based on nearest neighbor related features. The neighbor counts for different Ks (1, 5, 10, 20, 50, 100, 250, 500, 1000 and 2500) and different x-y ratio constants (1, 2.5, 4, 5.5, 7, 12 and 30) resulted in 10*7 features. For example: if a test observation has 3 of its 5 nearest neighbors of class A and 2 of its 5 nearest neighbors as class B, the candidate A will contain the numeric value of 3 for the K=5 feature, the candidate B will contain the numeric value of 2 for the K=5 feature and all other 18 candidates will contain the value of 0 for that feature. The mean time difference between a candidate and all 70 combinations resulted in 70 additional features. 10 more features were added by considering the distance between the Kth features and the observations for a ratio constant of 2.5. These features are an indication of the spatial density. 40 more features were added in a later iteration around the most significant nearest neighbor features. K was set at (35, 75, 100, 175, 375) for x-y ratio constants (0.4, 0.8, 1.3, 2, 3.2, 4.5, 6 and 8). The distances of all 40 combinations to the most distant neighbor were also added as features. Distance features are divided by the number of summary observations in order to have similar interpretations for the train and test features.
 
-I also added several features that consider the (smoothed) spatial grid densities. Other location features relate to the place summaries such as the median absolute deviations in x and y. 
+I further added several features that consider the (smoothed) spatial grid densities. Other location features relate to the place summaries such as the median absolute deviations  and standard deviations in x and y. The ratio between the median absolute deviations was added as well. Features were relaxed using additive (Laplace) smoothing with different relaxation constants whenever it made sense using the relaxation constants 20 and 300. Consequently, the relaxed mad for a place with 300 summary observation is equal to the mean of the place mad and the weighted place population mad for a relaxation constant of 300.
 
 ### Time
+The second largest share of the features set belongs to time features. Here I converted all time period counts to period density counts in order to handle the two drops in the time frequency. Periods include 27 two-week periods prior to the end of the train data and 27 1-week periods prior to the end of the train data. I also included features that look at the two-week densities looking back between 75 and 1 weeks from the observations. Additional features were added for the clear yearly pattern of some places. These features resulted in missing values but XGBoost is able to handle them.
 
+{% include image.html url="/img/weeklyDensities.png" description="Weekly counts" %}
+
+Hour, day and week features were calculated using the historical densities with and without cyclical smoothing and with or without relaxation. I suspected an interaction between the hour of the day and the day of the week and also added cyclical hour-day features. Features were also added for daily 15-minute intervals. The cyclical smoothing is applied with Gaussian windows. The windows were chosen such that the smoothed hour, hour-week and 15-minute blocks capture different frequencies.
+
+Other time features include extrapolated weekly densities using various time series models (arima, Holt-Winters and exponential smoothing). Further, the time since the end of the summary period was also added as well as the time between the end of the summary period and the last check in. 
 
 ### Accuracy
+{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
 
 ### Z-scores
 
 ### Most important features
+Correlated!
 
 The feature files are about 800MB for each batch and I saved all the features to an external HD.
-
-{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
 
 ## <a name="candidateSel2"><a> Candidate selection 2
 The features from the previous section are used to generate binary classification models on 15 different train batches using XGBoost models. With 100 candidates for each observation, this is a slow process and it made sense to me to narrow down the number of candidates to 20 at this stage. I did not perform any downsampling in my final approach since all zeros (not a match between the candidate and true match) contain valuable information. XGBoost is able to handle unbalanced data quite well in my experience. I did however consider to omit observations that didn't contain the true class in the top 100 but this resulted in slightly worse validation scores. The reasoning is the same as above: those values contain valuable information! The 15 candidate selection models are built with the top 142 features. The feature importance order is obtained by considering the XGBoost feature importance ranks of 20 models trained on different batches. Hyperparameters were selected using the local validation batches. The 15 second candidate selection models all generate a predicted probability of P(place_match|data), I average those to select the top 20 candidates in the second candidate selection step.
