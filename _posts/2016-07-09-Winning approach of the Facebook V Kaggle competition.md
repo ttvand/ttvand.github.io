@@ -102,7 +102,10 @@ Hour, day and week features were calculated using the historical densities with 
 Other time features include extrapolated weekly densities using various time series models (arima, Holt-Winters and exponential smoothing). Further, the time since the end of the summary period was also added as well as the time between the end of the summary period and the last check in. 
 
 ### Accuracy
+Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible:
 {% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
+
+The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wifi or cellular). 
 
 ### Z-scores
 
