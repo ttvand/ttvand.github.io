@@ -58,7 +58,7 @@ The main difficulty of this problem is the extended number of classes (places). 
 
 Generating a single classifier for all place-observation combinations would be infeasible even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only modeled for a set of place candidates. A simplification of the overall strategy is shown below
 
-{% include image.html url="/img/Strategy5.png" description="High level strategy" %}
+{% include image.html url="/img/Strategy6.png" description="High level strategy" %}
 
 The given raw train data is split in two chronological parts, with a similar ratio as the ratio between the train and test data. The summary period contains all given train observations of the first 408 days (minutes 0-587158). The second part of the given train data contains the next 138 days and will be referred to as the train/validation data from now on. The test data spans 153 days as mentioned before.
 
@@ -122,6 +122,6 @@ I really enjoyed working on this competition even though it was already one of t
 
 
 
-I look forward to your comments and suggestions!
+I look forward to your comments and suggestions.
 
 
