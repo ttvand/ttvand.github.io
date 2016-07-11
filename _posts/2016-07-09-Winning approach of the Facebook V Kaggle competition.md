@@ -103,7 +103,7 @@ Other time features include extrapolated weekly densities using various time ser
 
 ### Accuracy
 Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible. The signal is more accurate for accuracies in the 45-85 range (GPS data?).
-{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy groups" %}
+{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus 6 time and 32 accuracy groups" %}
 
 The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wifi or cellular). The places show different accuracy patterns and features were added to indicate the relative accuracy group densities. I added relative place densities for 3 and 32 approximately equal sized accuracy bins. It was also discovered that the location is related to the three accuracy groups for many places. This pattern was captured by the addition of spatial patterns for the different accuracy groups. A natural extension to the nearest neighbor calculation would incorporate the accuracy group but I did no longer have time to implement it.
 
@@ -113,7 +113,7 @@ Tens of z scores were added to indicate how similar a new observation is to the 
 ### Most important features
 Nearest neighbors are the most important features for the studied models. The most significant nearest neighbor features appear around K=100 for distance constant ratios around 2.5. Hourly and daily densities were all found to be very important as well and the highest feature ranks are obtained after smoothing. Relative densities of the three accuracy groups also appear near the top of the most important features. An interesting feature that also appears at the top of the list relates to the daily density 52 weeks prior to the check in. There is a clear yearly pattern which is most obvious for places with the highest daily counts.
 
-{% include image.html url="/img/yearlyPattern.png" description="Weekly counts" %}
+{% include image.html url="/img/yearlyPattern.png" description="Clear yearly pattern for place 5872322184. The green line goes back 52 weeks since the highest daily count" %}
 
 The feature files are about 800MB for each batch and I saved all the features to an external HD.
 
@@ -127,6 +127,9 @@ The first level learners are very similar to the second candidate selection mode
 
 ## <a name="secondLL"><a> Second level learners
 The 30 second level learners combine the predictions of the 100 first level models along with 21 manually selected features for all top 20 candidates. The 21 additional features are high level features such as the x, y and accuracy values as well as the time since the end of the summary period. The added value of the 21 features is very low but constant on the validation set and the public leaderboard (~0.02%). The best local validation score was obtained by considering moderate tree depths (depth 7) and the eta constant was set to 8/200 for 200 rounds. Column sampling also helped (0.6) and subsampling the observations (0.5) did not hurt but again resulted in a fitting speed increase. The candidates are ordered using the mean predicted probabilities of the 30 second level XGBoost learners.
+
+Analysis of the local MAP@3 indicated better results for accuracies in the 45-85 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices with less variation.
+{% include image.html url="/img/accuracyLocal.png" description="Local MAP@3 versus the 32 accuracy groups" %}
 
 ## <a name="conclusion"><a> Conclusion
 The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight-week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/" target="_blank">forum</a>. Many others also contributed valuable insights.
