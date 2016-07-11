@@ -102,15 +102,18 @@ Hour, day and week features were calculated using the historical densities with 
 Other time features include extrapolated weekly densities using various time series models (arima, Holt-Winters and exponential smoothing). Further, the time since the end of the summary period was also added as well as the time between the end of the summary period and the last check in. 
 
 ### Accuracy
-Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible:
-{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
+Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible. The signal is more accurate for accuracies in the 45-85 range (GPS data?).
+{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy groups" %}
 
-The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wifi or cellular). 
+The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wifi or cellular). The places show different accuracy patterns and features were added to indicate the relative accuracy group densities. I added relative place densities for 3 and 32 approximately equal sized accuracy bins. It was also discovered that the location is related to the three accuracy groups for many places. This pattern was captured by the addition of spatial patterns for the different accuracy groups. A natural extension to the nearest neighbor calculation would incorporate the accuracy group but I did no longer have time to implement it.
 
 ### Z-scores
+Tens of z scores were added to indicate how similar a new observation is to the historical patterns in the place candidates. Robust Z-scores ((f-median(f))/mad(f) instead of (f-mean(f))/sd(f)) gave the best results.
 
 ### Most important features
-Correlated!
+Nearest neighbors are the most important features for the studied models. The most significant nearest neighbor features appear around K=100 for distance constant ratios around 2.5. Hourly and daily densities were all found to be very important as well and the highest feature ranks are obtained after smoothing. Relative densities of the three accuracy groups also appear near the top of the most important features. An interesting feature that also appears at the top of the list relates to the daily density 52 weeks prior to the check in. There is a clear yearly pattern which is most obvious for places with the highest daily counts.
+
+{% include image.html url="/img/yearlyPattern.png" description="Weekly counts" %}
 
 The feature files are about 800MB for each batch and I saved all the features to an external HD.
 
