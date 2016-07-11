@@ -27,7 +27,7 @@ This blog post will cover all sections to go from the raw data to the winning su
 * *[Second level learners](#secondLL)*
 * *[Conclusion](#conclusion)*
 
-The source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This [thread](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution) on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
+The R source code is available on [GitHub](https://github.com/ttvand/Facebook-V/). This [thread](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/t/22081/1st-place-winning-solution) on the Kaggle forum discusses the solution on a higher level and is a good place to start if you participated in the challenge.
 
 ## <a name="introduction"><a> Introduction
 
@@ -52,7 +52,7 @@ Accuracy was by far the hardest feature to tackle. It was expected that it would
 I wrote an [interactive Shiny application](https://tvdwiele.shinyapps.io/Facebook-V/) to research these interactions for a subset of the places. Feel free to explore the data yourself!
 
 ## <a name="probDef"><a> Problem definition
-The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. It makes much sense to make use of the spatial information since this shows the most obvious and strong pattern for the different places. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single binary classification model in order to avoid to end up with a model with a high variance. The lack of any major spatial patterns in the exploratory analysis supports this approach.
+The main difficulty of this problem is the extended number of classes (places). With 8.6 million test records there are about a trillion (10^12) place-observation combinations. Luckily, most of the classes have a very low conditional probability given the data (x, y, time and accuracy). The major strategy on the forum to reduce the complexity consisted of calculating a classifier for many x-y rectangular grids. It makes much sense to make use of the spatial information since this shows the most obvious and strong pattern for the different places. This approach makes the complexity manageable but is likely to lose a significant amount of information since the data is so variable. I decided to model the problem with a single binary classification model in order to avoid to end up with many high variance models. The lack of any major spatial patterns in the exploratory analysis supports this approach.
 
 ## <a name="strategy"><a> Strategy
 
@@ -73,11 +73,18 @@ All models are built using different train batches. Local validation is used to 
 ## <a name="candidateSel1"><a> Candidate selection 1
 The first candidate selection step reduces the number of potential classes from >100K to 100 by considering nearest neighbors of the observations. I considered the neighbor counts of the 2500 nearest neighbors where y variations are 2.5 times more important than x variations. Ties in the neighbor counts are resolved by the mean time difference since the observations. Resolving ties with the mean time difference is motivated by the shifts in popularity of the places. 
 
+The nearest neighbor counts are calculated efficiently by splitting up the data in overlapping rectangular grids. Grids are created as small as possible while still guaranteeing that the 2500 nearest neighbors fall within the grid in the worst case scenario.
+
 ## <a name="featEng"><a> Feature engineering
 
 ### Feature engineering strategy
+Three weeks into the competition, I climbed to the top of the public leaderboard with about 50 features. Ever since I kept thinking of new features to capture the underlying patterns of the data. I also added features that are similar to the most important features in order to capture the more subtle patterns. The final model contains 430 numeric features and this section is intended to discuss the most important ones.
+
+All features are rescaled if needed in order to result in similar interpretations for the train and test features.
 
 ### Location
+
+Different grids
 
 ### Time
 
@@ -90,10 +97,15 @@ The first candidate selection step reduces the number of potential classes from 
 {% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus time and accuracy" %}
 
 ## <a name="candidateSel2"><a> Candidate selection 2
+The features from the previous section are used to generate binary classification models on 15 different train batches using XGBoost models. With 100 candidates for each observation, this is a slow process and it made sense to me to narrow down the number of candidates to 20 at this stage. The 15 candidate selection models are built with the top 142 features. The feature importance order is obtained by considering the XGBoost feature importance ranks of 20 other models. Hyperparameters were selected using the local validation batches. The 15 second candidate selection models all generate a predicted probability of P(place_match|data), I average those to select the top 20 candidates in the second candidate selection step.
+
+At this point I also dropped observations that belong to places that only have observations in the train/validation period. This filtering was also applied to the test set.
 
 ## <a name="firstLL"><a> First level learners
+The first level learners are very similar to the second candidate selection models other than the fact that they are fit on one fifth of the data. 100 base learners were fit on different random parts of the training period. Deep trees gave me the best results here (depth 11) and the eta constant was set to (11 or 12)/500 for 500 rounds. Colsampling also helped (0.6) and subsampling the observations (0.5) did not hurt but of course resulted in a fitting speed increase. I included either all 430 features or a random pick of the ordered features by importance in a desirable feature count range (100-285 and 180-240).
 
 ## <a name="secondLL"><a> Second level learners
+
 
 ## <a name="conclusion"><a> Conclusion
 The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the [forum](https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums). Many others also contributed valuable insights.
