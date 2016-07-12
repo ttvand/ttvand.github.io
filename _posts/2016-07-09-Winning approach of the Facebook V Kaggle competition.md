@@ -58,7 +58,7 @@ The main difficulty of this problem is the extended number of classes (places). 
 
 Generating a single classifier for all place-observation combinations would be infeasible even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only modeled for a set of place candidates. A simplification of the overall strategy is shown below
 
-{% include image.html url="/img/Strategy7.png" description="High level strategy" %}
+{% include image.html url="/img/Strategy8.png" description="High level strategy" %}
 
 The given raw train data is split in two chronological parts, with a similar ratio as the ratio between the train and test data. The summary period contains all given train observations of the first 408 days (minutes 0-587158). The second part of the given train data contains the next 138 days and will be referred to as the train/validation data from now on. The test data spans 153 days as mentioned before.
 
@@ -102,10 +102,12 @@ Hour, day and week features were calculated using the historical densities with 
 Other time features include extrapolated weekly densities using various time series models (arima, Holt-Winters and exponential smoothing). Further, the time since the end of the summary period was also added as well as the time between the end of the summary period and the last check in. 
 
 ### Accuracy
-Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible. The signal is more accurate for accuracies in the 45-85 range (GPS data?).
+Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible. The signal is more accurate for accuracies in the 45-84 range (GPS data?).
 {% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus 6 time and 32 accuracy groups" %}
 
-The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wi-Fi or cellular). The places show different accuracy patterns and features were added to indicate the relative accuracy group densities. I added relative place densities for 3 and 32 approximately equally sized accuracy bins. It was also discovered that the location is related to the three accuracy groups for many places. This pattern was captured by the addition of spatial patterns for the different accuracy groups. A natural extension to the nearest neighbor calculation would incorporate the accuracy group but I did no longer have time to implement it.
+The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wi-Fi or cellular). The places show different accuracy patterns and features were added to indicate the relative accuracy group densities. The middle accuracy group was set to the 45-84 range. I added relative place densities for 3 and 32 approximately equally sized accuracy bins. It was also discovered that the location is related to the three accuracy groups for many places. This pattern was captured by the addition of additional features for the different accuracy groups. A natural extension to the nearest neighbor calculation would incorporate the accuracy group but I did no longer have time to implement it.
+
+{% include image.html url="/img/accuracyGroupVsX.png" description="The x-coordinates seem to be related to the accuracy group for places like 8170103882" %}
 
 ### Z-scores
 Tens of z scores were added to indicate how similar a new observation is to the historical patterns in the place candidates. Robust Z-scores ((f-median(f))/mad(f) instead of (f-mean(f))/sd(f)) gave the best results.
@@ -128,7 +130,7 @@ The first level learners are very similar to the second candidate selection mode
 ## <a name="secondLL"><a> Second level learners
 The 30 second level learners combine the predictions of the 100 first level models along with 21 manually selected features for all top 20 candidates. The 21 additional features are high level features such as the x, y and accuracy values as well as the time since the end of the summary period. The added value of the 21 features is very low but constant on the validation set and the public leaderboard (~0.02%). The best local validation score was obtained by considering moderate tree depths (depth 7) and the eta constant was set to 8/200 for 200 rounds. Column sampling also helped (0.6) and subsampling the observations (0.5) did not hurt but again resulted in a fitting speed increase. The candidates are ordered using the mean predicted probabilities of the 30 second level XGBoost learners.
 
-Analysis of the local MAP@3 indicated better results for accuracies in the 45-85 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices that show less variation .
+Analysis of the local MAP@3 indicated better results for accuracies in the 45-84 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices that show less variation .
 {% include image.html url="/img/accuracyLocal.png" description="Local MAP@3 versus the 32 accuracy groups" %}
 
 ## <a name="conclusion"><a> Conclusion
