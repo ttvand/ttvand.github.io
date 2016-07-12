@@ -138,7 +138,7 @@ The private leaderboard standing below, used to rank the teams, shows the top 30
 
 {% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
 
-I started the competition using a modest 8GB laptop but decided to purchase a €1500 workstation two weeks into the competition to speed up the modeling. Starting with limited resources ended up to be an advantage since it forced me to think of ways to optimize the feature generation logic. My big friend in this competition was the data.table package.
+I started the competition using a modest 8GB laptop but decided to purchase a €1500 workstation two weeks into the competition to speed up the modeling. Starting with limited resources ended up to be an advantage since it forced me to think of ways to optimize the feature generation logic. My best friend during this competition was the data.table package.
 
 Running all steps on my 48GB workstation would take about a month. That seems like a ridiculously long time but it is explained by the extended computation time of the nearest neighbor features. While calculating the NN features I was continuously working on other parts of the workflow so speeding the NN logic up would not have resulted in a better final score.
 
