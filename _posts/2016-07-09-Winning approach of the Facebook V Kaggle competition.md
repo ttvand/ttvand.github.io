@@ -130,7 +130,7 @@ The first level learners are very similar to the second candidate selection mode
 ## <a name="secondLL"><a> Second level learners
 The 30 second level learners combine the predictions of the 100 first level models along with 21 manually selected features for all top 20 candidates. The 21 additional features are high level features such as the x, y and accuracy values as well as the time since the end of the summary period. The added value of the 21 features is very low but constant on the validation set and the public leaderboard (~0.02%). The best local validation score was obtained by considering moderate tree depths (depth 7) and the eta constant was set to 8/200 for 200 rounds. Column sampling also helped (0.6) and subsampling the observations (0.5) did not hurt but again resulted in a fitting speed increase. The candidates are ordered using the mean predicted probabilities of the 30 second level XGBoost learners.
 
-Analysis of the local MAP@3 indicated better results for accuracies in the 45-84 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices that show less variation .
+Analysis of the local MAP@3 indicated better results for accuracies in the 45-84 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices that show less spatial variation.
 {% include image.html url="/img/accuracyLocal.png" description="Local MAP@3 versus accuracy groups" %}
 
 ## <a name="conclusion"><a> Conclusion
