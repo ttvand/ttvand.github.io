@@ -11,6 +11,7 @@ github_username: ttvand
 # Build settings
 markdown: kramdown
 highlighter: rouge
+future: true
 permalink: /:title/
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
