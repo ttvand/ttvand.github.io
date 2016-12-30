@@ -67,7 +67,7 @@ I added a boolean flag for users that had data in May 2015 and June 2015 as user
 Other features were added to incorporate dynamic information in the lag period of the 24 user data predictors. Many of these predictors are however static and added limited value to the overall performance. It would be great to study the impact of changing income on the product purchasing behavior but that was not possible given the static income values in the given data set. I did not include interactions between the most important features and wish that I had after reading the approaches of several of the other top competitors.
 
 ## <a name="baseModels"><a> Base models
-The base models are binary xgboost models for all 24 products for all the 16 months that showed positive flanks (February 2015 - May 2016). My main insight here was to use all the available data. This means that the models are trained on all users that did not contain the specific products in the previous months. Initially I was using a "marginal" model to calculate the probability of any positive flank and a "conditional" model to calculate the probability of a product positive flank given at least one positive flank. This results in a way faster fitting process since only about 3 to 4 percent of the users buys at least one product in a specific month but I found that I got slightly better results when modeling using all the data (the "joint" model).
+The base models are binary xgboost models for all 24 products and all 16 months that showed positive flanks (February 2015 - May 2016). My main insight here was to use all the available data. This means that the models are trained on all users that did not contain the specific products in the previous months. Initially I was using a "marginal" model to calculate the probability of any positive flank and a "conditional" model to calculate the probability of a product positive flank given at least one positive flank. This results in a way faster fitting process since only about 3 to 4 percent of the users buys at least one product in a specific month but I found that I got slightly better results when modeling using all the data (the "joint" model).
 
 The hyperparameters were decided based on the number of training positive flanks, the more positive flanks I observed in the train data, the deeper the trees.
 
@@ -79,11 +79,11 @@ I also tried to bootstrap the base models but this gave results that were consis
 Include graphs: linear weights table, shiny app SS correlation matrix. shiny app Probability correlation different lags. Add trend detection shiny app SS
 
 ## <a name="postProcessing"><a> Post-processing
-### Confidence incorporation
+**Confidence incorporation**
 10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
-### Product probability normalization
-### Nomina Nom_pens reordering
-### MAP optimization
+**Product probability normalization**
+**Nomina Nom_pens reordering**
+**MAP optimization**
 
 ## <a name="Ensembling"><a> Ensembling
 Add graph of public LB versus mean correlation
