@@ -53,5 +53,15 @@ The R source code is available on <a href="https://github.com/ttvand/Santander-P
 
 
 ## <a name="conclusion"><a> Conclusion
+The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition on the public leaderboard between the top three teams but idle_speculation was able to generalise better making him a well deserved winner of the competition. I am very happy with the second spot, especially given the difference between second, third and fourth, but I would be lying if I said that I hadn’t hoped for more for a long time. There was a large gap between first and second for several weeks but this competition lasted a couple of days too long for me to secure the top seat. I was able to make great progress during my first 10 days and could only achieve minor improvements during the last four weeks. Being on top for such a long time tempted me to make small incremental changes where I would only keep those changes if they improved my public score. With a 30-70% public/private leaderboard split this approach is prone to overfitting and in hindsight I wish that I had put more trust in my local validation. Applying trend detection and MAP optimization steps in all of my submissions would have improved my final score to about 0.03136 but idle_speculation would still have won the contest. I was impressed by the insights of many of the top competitors. You can read more about their approaches on the <a href="https://www.kaggle.com/c/santander-product-recommendation/forums/t/26831/all-solutions" target="_blank">Kaggle forum</a>.
+
+{% include image.html url="/img/PrivateLBSant.png" description="Private leaderboard score (MAP@7) - idle_speculation stands out from the pack" %}
+
+Running all steps on my 48GB workstation would take about a week. Generating a ~0.031 private leaderboard score could however be achieved in about 90 minutes by focusing on the most important base model features using my feature ranking and only using one model for each product-lag combination. I would suggest to consider only the top 10 features in the base model generation and omit the folds from the model generation if you are mostly interested in the approach rather than the result.
+
+I really enjoyed working on this competition although I didn't compete as passionately as I did in the Facebook competition. The funny thing is that I would actually never have participated had I not quit my pilgrimmage on the famous Spanish "Camino del Norte" because of food poisoning in... Santander. I initially considered the Santander competition as a great way to keep busy whereas I saw the Facebook competition as a way to change my professional career. Being ahead for a long time also made me a little complacent but the final days on this competition brought back the great feeling of close competition. The numerous challenges at <a href="https://deepmind.com/" target="_blank">Google DeepMind</a> will probably keep me from Kaggle for a while but I hope to compete again in a couple of years with a greater toolbox!
+
+
+I look forward to your comments and suggestions.
 
 
