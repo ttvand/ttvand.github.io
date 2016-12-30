@@ -8,7 +8,7 @@ header-img: "img/FBCheckinDark.jpg"
 comments: true
 ---
 
-
+My test
 
 The <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/" target="_blank">Facebook V: Predicting Check Ins data science competition</a> where the goal was to predict which place a person would like to check in to has just ended. I participated with the goal of learning as much as possible and maybe aim for a top 10% since this was my first serious Kaggle competition attempt. I managed to exceed all expectations and finished 1st out of 1212 participants! In this post, I’ll explain my approach.
 
