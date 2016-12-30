@@ -2,7 +2,7 @@
 layout: post
 title: "Santander Product Recommendation"
 subtitle:   "Second place in my second featured Kaggle competition!"
-date:       2016-30-12 00:00:00
+date:       2016-12-30 00:00:00
 author:     "Tom Van de Wiele"
 header-img: "img/Santander office 2.jpg"
 comments: true
