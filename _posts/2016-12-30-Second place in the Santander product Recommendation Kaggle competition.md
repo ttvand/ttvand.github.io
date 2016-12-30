@@ -10,7 +10,7 @@ comments: true
 
 
 
-The <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/" target="_blank">Facebook V: Predicting Check Ins data science competition</a> where the goal was to predict which place a person would like to check in to has just ended. I participated with the goal of learning as much as possible and maybe aim for a top 10% since this was my first serious Kaggle competition attempt. I managed to exceed all expectations and finished 1st out of 1212 participants! In this post, I’ll explain my approach.
+The <a href="https://www.kaggle.com/c/santander-product-recommendation" target="_blank">Santander Product Recommendation data science competition</a> where the goal was to predict which new banking products customers were most likely to buy has just ended. After my earlier success in the <a href="https://ttvand.github.io/Winning-approach-of-the-Facebook-V-Kaggle-competition/" target="_blank">Facebook recruiting competition</a> I decided to have another go at competing with over 2,000 data scientists. This time I finished 2nd out of 1785 teams! In this post, I’ll explain my approach.
 
 ## Overview
 
