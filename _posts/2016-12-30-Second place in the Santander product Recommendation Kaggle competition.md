@@ -33,6 +33,14 @@ The R source code is available on <a href="https://github.com/ttvand/Santander-P
 {% include image.html url="/img/santander-banner-ts-660x.png" description="" %}
 Under their current system, a small number of Santander’s customers receive many recommendations while many others rarely see any resulting in an uneven customer experience. In their second competition, Santander is challenging Kagglers to predict which products their existing customers will use in the next month based on their past behavior and that of similar customers. With a more effective recommendation system in place, Santander can better meet the individual needs of all customers and ensure their satisfaction no matter where they are in life.
 
+The training data consists of nearly 1 million users with monthly historical user and product data between January 2015 and May 2016. User data consists of 24 predictors including the age and income of the users. Product data consists of boolean flags for all 24 products and indicates whether the user owned the product in the respective months. The goal is to predict which **new** products the 929,615 test users are most likely to buy in June 2016. A product is considered new if it is owned in June 2016 but not in May 2016. The next plot shows that most users in the test data set were already present in the first month of the train data and that a large number of test users contains the first training information in July 2015. Nearly all test users contain monthly data between their first appearance in the train data and the end of the training period.
+
+{% include image.html url="/img/First observation test.png" description="First occurence of the test users in the training data" %}
+
+A ranked list of the top seven most likely new products is expected for all users in the test data. The leaderboard score is calculated using the <a href="https://www.kaggle.com/wiki/MeanAveragePrecision" target="_blank">MAP@7 criterion</a>. The total score is the mean of the scores for all users. When no new products are bought, the MAP score is always zero and new products are only added for about 3.51% of the users. This means that the public score is only calculated on about 9800 users and that the perfect score is close to 0.035.
+
+The test data is split randomly between the public and private leaderboard using a 30-70% random split. For those who are not familiar with Kaggle competitions: feedback is given during the competition on the public leaderboard whereas the private leaderboard is used to calculate the final standings.
+
 ## <a name="explorAnalysis"><a> Exploratory analysis
 
 
