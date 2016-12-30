@@ -80,10 +80,17 @@ Include graphs: linear weights table, shiny app SS correlation matrix. shiny app
 
 ## <a name="postProcessing"><a> Post-processing
 **Confidence incorporation**
+
 10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
 **Product probability normalization**
+
+Hello
 **Nomina Nom_pens reordering**
+
+Hello
 **MAP optimization**
+
+World
 
 ## <a name="Ensembling"><a> Ensembling
 Add graph of public LB versus mean correlation
