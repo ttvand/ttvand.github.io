@@ -52,12 +52,13 @@ The interactive application also reveals that there is an important relation bet
 
 ## <a name="strategy"><a> Strategy
 
-A simplification of the overall strategy to generate a single submission is show below
+A simplification of the overall strategy to generate a single submission is shown below. The final two submissions are ensembles of multiple single submissions with small variations in the base model combination and post-processing logic.
 {% include image.html url="/img/Santander Strategy 2.png" description="Single submission strategy" %}
 
+The core elements of my approach are the base models. These are all trained on a single month of data for all 24 products. Each base model generates an xgboost model of the new product probability, conditional on the absence of the product in the previous month. The base models are trained using all the available historical information. This can only be achieved by calculating separate feature files for all months between February 2015 and May 2016. The models trained on February 2015 only use a single lag month whereas the models trained on May 2016 use 16 lag months. Several feature preparation steps are required before the feature files can be generated. Restricting the base models to use only the top features for each lag-product pair speeds up the modeling and evaluation process. The ranked list of features is obtained by combining the feature gain ranks of the 5-fold cross validation on the base models trained using all features. The base model predictions on the test data are combined using a linear combination of the base model predictions. The weights are obtained using public leaderboard information and local validation on May 2016 as well as a correlation study of the base model predictions. Several post-processing steps are applied to the weighted product predictions before generating a ranked list of the most likely new products for all users.
 
 ## <a name="featEng"><a> Feature engineering
-
+Which train/test features
 
 ## <a name="baseModels"><a> Base models
 
