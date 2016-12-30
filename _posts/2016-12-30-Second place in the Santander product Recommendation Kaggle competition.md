@@ -42,7 +42,7 @@ A ranked list of the top seven most likely new products is expected for all user
 The test data is split randomly between the public and private leaderboard using a 30-70% random split. For those who are not familiar with Kaggle competitions: feedback is given during the competition on the public leaderboard whereas the private leaderboard is used to calculate the final standings.
 
 ## <a name="explorAnalysis"><a> Exploratory analysis
-I wrote an <a href="https://tvdwiele.shinyapps.io/Santander-Product-Recommendation/" target="_blank">interactive Shiny application</a> to research the raw data. Feel free to explore the data yourself!
+I wrote an <a href="https://tvdwiele.shinyapps.io/Santander-Product-Recommendation/" target="_blank">interactive Shiny application</a> to research the raw data. Feel free to explore the data yourself! This analysis revealed many interesting patterns and was the major motivation for many of the base model features.
 
 {% include image.html url="/img/product frequency.png" description="New product counts by time for the top 9 products" %}
 
