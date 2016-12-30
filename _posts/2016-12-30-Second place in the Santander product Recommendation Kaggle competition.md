@@ -67,16 +67,27 @@ I added a boolean flag for users that had data in May 2015 and June 2015 as user
 Other features were added to incorporate dynamic information in the lag period of the 24 user data predictors. Many of these predictors are however static and added limited value to the overall performance. It would be great to study the impact of changing income on the product purchasing behavior but that was not possible given the static income values in the given data set. I did not include interactions between the most important features and wish that I had after reading the approaches of several of the other top competitors.
 
 ## <a name="baseModels"><a> Base models
+The base models are binary xgboost models for all 24 products for all the 16 months that showed positive flanks (February 2015 - May 2016). My main insight here was to use all the available data. This means that the models are trained on all users that did not contain the specific products in the previous months. Initially I was using a "marginal" model to calculate the probability of any positive flank and a "conditional" model to calculate the probability of a product positive flank given at least one positive flank. This results in a way faster fitting process since only about 3 to 4 percent of the users buys at least one product in a specific month but I found that I got slightly better results when modeling using all the data (the "joint" model).
 
+The hyperparameters were decided based on the number of training positive flanks, the more positive flanks I observed in the train data, the deeper the trees.
+
+All models were built using all the train data as well as the remaining data after excluding 10 mutually exclusive random folds. I tried several ways to stack the base model predictions but it seemed that the pattern differences were too variable over time for the value of stacking to kick in compared to a weighted average of the base model predictions.
+
+I also tried to bootstrap the base models but this gave results that were consistently worse. To my current knowledge none of the top competitors got bootstrapping to work in this problem setting.
 
 ## <a name="baseModelComb"><a> Base model combination
-
+Include graphs: linear weights table, shiny app SS correlation matrix. shiny app Probability correlation different lags. Add trend detection shiny app SS
 
 ## <a name="postProcessing"><a> Post-processing
-
+### Confidence incorporation
+10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
+### Product probability normalization
+### Nomina Nom_pens reordering
+### MAP optimization
 
 ## <a name="Ensembling"><a> Ensembling
-
+Add graph of public LB versus mean correlation
+Probability vs rank averaging. Wish I had started earlier
 
 ## <a name="conclusion"><a> Conclusion
 The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition on the public leaderboard between the top three teams but idle_speculation was able to generalise better making him a well deserved winner of the competition. I am very happy with the second spot, especially given the difference between second, third and fourth, but I would be lying if I said that I hadn’t hoped for more for a long time. There was a large gap between first and second for several weeks but this competition lasted a couple of days too long for me to secure the top seat. I was able to make great progress during my first 10 days and could only achieve minor improvements during the last four weeks. Being on top for such a long time tempted me to make small incremental changes where I would only keep those changes if they improved my public score. With a 30-70% public/private leaderboard split this approach is prone to overfitting and in hindsight I wish that I had put more trust in my local validation. Applying trend detection and MAP optimization steps in all of my submissions would have improved my final score to about 0.03136 but idle_speculation would still have won the contest. I was impressed by the insights of many of the top competitors. You can read more about their approaches on the <a href="https://www.kaggle.com/c/santander-product-recommendation/forums/t/26831/all-solutions" target="_blank">Kaggle forum</a>.
