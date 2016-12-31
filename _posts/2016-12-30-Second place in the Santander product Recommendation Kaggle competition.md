@@ -4,7 +4,7 @@ title: "Santander Product Recommendation"
 subtitle:   "Second place and $20K prize in my second featured Kaggle competition!"
 date:       2016-12-30 00:00:00
 author:     "Tom Van de Wiele"
-header-img: "img/Santander office 3 shaded.jpg"
+header-img: "img/Santander office 4.jpg"
 comments: true
 ---
 
@@ -82,12 +82,15 @@ Include graphs: linear weights table, shiny app SS correlation matrix. shiny app
 **Confidence incorporation**
 
 10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
+
 **Product probability normalization**
 
 Hello
+
 **Nomina Nom_pens reordering**
 
 Hello
+
 **MAP optimization**
 
 World
