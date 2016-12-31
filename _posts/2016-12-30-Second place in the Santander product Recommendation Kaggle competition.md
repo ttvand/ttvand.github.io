@@ -89,7 +89,7 @@ Some product positive flanks such as nomina and nom_pens mostly rely on informat
 ## <a name="postProcessing"><a> Post-processing
 **Product probability normalization** The test probabilities are transformed by elevating them to an exponent such that the sum of the product probabilities matches the extrapolated public leaderboard count. An exponential transformation has the benefit over a linear transformation that it mostly affects low probabilities. Here it was important to realise that the probed public leaderboard scores don't translate directly into positive leaderboard counts. Products like *nomina* which are frequently bought together with *nom_pens* and *cno_fin* to less extent are thus more probable than their relative MAP contribution.
 
-**Confidence incorporation** Through a simulation study I was able to confirm my suspicion that in order to optimize the expected MAP, less confident predictions should be shrunk with respect to more confident predictions. I applied this in some of my submissions and this added limited but significant value to the final ensembles. I calculated *confidence* as mean(prediction|actual positive flank)/mean(prediction|no positive flank) where prediction was calculated on the out of fold records in the 10-fold cross validation of the base models.
+**Confidence incorporation** Through a simulation study I was able to confirm my suspicion that in order to optimize the expected MAP, less confident predictions should be shrunk with respect to more confident predictions. I applied this in some of my submissions and this added limited but significant value to the final ensembles. I calculated *confidence* as mean(prediction given actual positive flank)/mean(prediction given no positive flank) where prediction was calculated on the out of fold records in the 10-fold cross validation of the base models.
 
 **Nomina Nom_pens reordering** *Nomina* is never bought without *nom_pens* if *nom_pens* was not owned in the previous month. I simply swapped their predicted probabilities if *nomina* was ever ranked above *nom_pens* and if both were not owned in the previous month.
 
@@ -98,6 +98,7 @@ Some product positive flanks such as nomina and nom_pens mostly rely on informat
 
 
 ## <a name="Ensembling"><a> Ensembling
+I submitted two ensembles: one using my last 26 submissions where the weighted probability was calculated and where the weights were calculated based on the correlation with the other submissions and the public leaderboard score. The second ensemble consisted of a manual selection of 4 of these 26 submissions that were again selected and weighted using their correlation with other submissions and public leaderboard feedback.
 Add graph of public LB versus mean correlation
 Probability vs rank averaging. Wish I had started earlier
 
