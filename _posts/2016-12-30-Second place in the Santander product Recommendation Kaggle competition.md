@@ -77,23 +77,19 @@ I also tried to bootstrap the base models but this gave results that were consis
 
 ## <a name="baseModelComb"><a> Base model combination
 Include graphs: linear weights table, shiny app SS correlation matrix. shiny app Probability correlation different lags. Add trend detection shiny app SS
+{% include image.html url="/img/product weights.png" description="Relative base model weights by product" %}
+{% include image.html url="/img/base model correlations.png" description="Base model correlations for cco_fin" %}
+{% include image.html url="/img/lag predictions comparison.png" description="Base model predictions comparison for cco_fin using Lag 5 (June 2015) and Lag 11 (December 2015)" %}
+{% include image.html url="/img/Predictions Aligner.png" description="Base model recibo predictions comparison for user 17211" %}
 
 ## <a name="postProcessing"><a> Post-processing
-**Confidence incorporation**
+**Confidence incorporation** 10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
 
-10-fold cross-validation of the base models allowed me to calculate the confidence of the base model predictions.
+**Product probability normalization** Hello
 
-**Product probability normalization**
+**Nomina Nom_pens reordering** Hello
 
-Hello
-
-**Nomina Nom_pens reordering**
-
-Hello
-
-**MAP optimization**
-
-World
+**MAP optimization** World
 
 ## <a name="Ensembling"><a> Ensembling
 Add graph of public LB versus mean correlation
