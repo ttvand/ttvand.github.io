@@ -4,7 +4,7 @@ title: "Facebook V: Predicting Check Ins"
 subtitle:   "I won the Kaggle competition!"
 date:       2016-07-09 00:00:00
 author:     "Tom Van de Wiele"
-header-img: "img/FBCheckinDark.jpg"
+header-img: "img/Facebook/FBCheckinDark.jpg"
 comments: true
 ---
 
@@ -29,7 +29,7 @@ The R source code is available on <a href="https://github.com/ttvand/Facebook-V/
 
 ## <a name="introduction"><a> Introduction
 
-{% include image.html url="/img/FB5_banner.png" description="Competition banner" %}
+{% include image.html url="/img/Facebook/FB5_banner.png" description="Competition banner" %}
 
 **From the competition page**: The goal of this competition is to predict which place a person would like to check in to. For the purposes of this competition, Facebook created an artificial world consisting of more than 100,000 places located in a 10 km by 10 km square. For a given set of coordinates, your task is to return a ranked list of the most likely places. Data was fabricated to resemble location signals coming from mobile devices, giving you a flavor of what it takes to work with real data complicated by inaccurate and noisy values. Inconsistent and erroneous location data can disrupt experience for services like Facebook Check In.
 
@@ -37,7 +37,7 @@ The training data consists of approximately 29 million observations where the lo
 
 A ranked list of the top three most likely places is expected for all test records. The leaderboard score is calculated using the MAP@3 criterion. Consequently, ranking the actual place as the most likely candidate gets a score of 1, ranking the actual place as the second most likely gets a score of 1/2 and a third rank of the actual place results in a score of 1/3. If the actual place is not in the top three of ranked places, a score of 0 is awarded for that record. The total score is the mean of the observation scores.
 
-{% include image.html url="/img/kaggle_screenshot-min.png" description="Check Ins where each place has a different color" %}
+{% include image.html url="/img/Facebook/kaggle_screenshot-min.png" description="Check Ins where each place has a different color" %}
 
 ## <a name="explorAnalysis"><a> Exploratory analysis
 
@@ -56,7 +56,7 @@ The main difficulty of this problem is the extended number of classes (places). 
 
 Generating a single classifier for all place-observation combinations would be unpractical, even with a powerful cluster. My approach consists of a stepwise strategy in which the conditional place probability is only modeled for a set of place candidates. A simplification of the overall strategy is shown below
 
-{% include image.html url="/img/Strategy8.png" description="High level strategy" %}
+{% include image.html url="/img/Facebook/Strategy8.png" description="High level strategy" %}
 
 The given raw train data is split in two chronological parts, with a similar ratio as the ratio between the train and test data. The summary period contains all given train observations of the first 408 days (minutes 0-587158). The second part of the given train data contains the next 138 days and will be referred to as the train/validation data from now on. The test data spans 153 days as mentioned before.
 
@@ -93,7 +93,7 @@ I further added several features that consider the (smoothed) spatial grid densi
 ### Time
 The second largest share of the features set belongs to time features. Here I converted all time period counts to period density counts in order to handle the two drops in the time frequency. Periods include 27 two-week periods prior to the end of the summary data and 27 1-week periods prior to the end of the summary data. I also included features that look at the two-week densities looking back between 75 and 1 weeks from the observations. These features resulted in missing values but XGBoost is able to handle them. Additional features were added for the clear yearly pattern of some places. 
 
-{% include image.html url="/img/weeklyDensities.png" description="Weekly counts" %}
+{% include image.html url="/img/Facebook/weeklyDensities.png" description="Weekly counts" %}
 
 Hour, day and week features were calculated using the historical densities with and without cyclical smoothing and with or without relaxation. I suspected an interaction between the hour of the day and the day of the week and also added cyclical hour-day features. Features were added for daily 15-minute intervals as well. The cyclical smoothing is applied with Gaussian windows. The windows were chosen such that the smoothed hour, hour-week and 15-minute blocks capture different frequencies.
 
@@ -101,11 +101,11 @@ Other time features include extrapolated weekly densities using various time ser
 
 ### Accuracy
 Understanding accuracy was the result of generating many plots. There is a significant but low correlation between accuracy and the variation in x and y but it is not until accuracy is binned in approximately equal sizes that the signal becomes visible. The signal is more accurate for accuracies in the 45-84 range (GPS data?).
-{% include image.html url="/img/meanXVariationVsAc.png" description="Mean variation from the median in x versus 6 time and 32 accuracy groups" %}
+{% include image.html url="/img/Facebook/meanXVariationVsAc.png" description="Mean variation from the median in x versus 6 time and 32 accuracy groups" %}
 
 The accuracy distribution seems to be a mixed distribution with three peaks which changes over time. It is likely to be related to three different mobile connection types (GPS, Wi-Fi or cellular). The places show different accuracy patterns and features were added to indicate the relative accuracy group densities. The middle accuracy group was set to the 45-84 range. I added relative place densities for 3 and 32 approximately equally sized accuracy bins. It was also discovered that the location is related to the three accuracy groups for many places. This pattern was captured by the addition of additional features for the different accuracy groups. A natural extension to the nearest neighbor calculation would incorporate the accuracy group but I did no longer have time to implement it.
 
-{% include image.html url="/img/accuracyGroupVsX.png" description="The x-coordinates seem to be related to the accuracy group for places like 8170103882" %}
+{% include image.html url="/img/Facebook/accuracyGroupVsX.png" description="The x-coordinates seem to be related to the accuracy group for places like 8170103882" %}
 
 ### Z-scores
 Tens of z scores were added to indicate how similar a new observation is to the historical patterns in the place candidates. Robust Z-scores ((f-median(f))/mad(f) instead of (f-mean(f))/sd(f)) gave the best results.
@@ -113,7 +113,7 @@ Tens of z scores were added to indicate how similar a new observation is to the 
 ### Most important features
 Nearest neighbors are the most important features for the studied models. The most significant nearest neighbor features appear around K=100 for distance constant ratios around 2.5. Hourly and daily densities were all found to be very important as well and the highest feature ranks are obtained after smoothing. Relative densities of the three accuracy groups also appear near the top of the most important features. An interesting feature that also appears at the top of the list relates to the daily density 52 weeks prior to the check in. There is a clear yearly pattern which is most obvious for places with the highest daily counts.
 
-{% include image.html url="/img/yearlyPattern.png" description="Clear yearly pattern for place 5872322184. The green line goes back 52 weeks since the highest daily count" %}
+{% include image.html url="/img/Facebook/yearlyPattern.png" description="Clear yearly pattern for place 5872322184. The green line goes back 52 weeks since the highest daily count" %}
 
 The feature files are about 800MB for each batch and I saved all the features to an external HD.
 
@@ -129,12 +129,12 @@ The first level learners are very similar to the second candidate selection mode
 The 30 second level learners combine the predictions of the 100 first level models along with 21 manually selected features for all top 20 candidates. The 21 additional features are high level features such as the x, y and accuracy values as well as the time since the end of the summary period. The added value of the 21 features is very low but constant on the validation set and the public leaderboard (~0.02%). The best local validation score was obtained by considering moderate tree depths (depth 7) and the eta constant was set to 8/200 for 200 rounds. Column sampling also helped (0.6) and subsampling the observations (0.5) did not hurt but again resulted in a fitting speed increase. The candidates are ordered using the mean predicted probabilities of the 30 second level XGBoost learners.
 
 Analysis of the local MAP@3 indicated better results for accuracies in the 45-84 range. The difference between local and test validation scores is in large part related to this observation. There seems to be a trend towards the use of devices that show less spatial variation.
-{% include image.html url="/img/accuracyLocal.png" description="Local MAP@3 versus accuracy groups" %}
+{% include image.html url="/img/Facebook/accuracyLocal.png" description="Local MAP@3 versus accuracy groups" %}
 
 ## <a name="conclusion"><a> Conclusion
 The private leaderboard standing below, used to rank the teams, shows the top 30 teams. It was a very close competition in the end and Markus would have been a well-deserved winner as well. We were very close to each other ever since the third week of the eight-week contest and pushed each other forward. The fact that the test data contains 8.6 million records and that it was split randomly for the private and public leaderboard resulted in a very confident estimate of the private standing given the public leaderboard. I was most impressed by the approaches of Markus and Jack (Japan) who finished in third position. You can read more about their approaches on the <a href="https://www.kaggle.com/c/facebook-v-predicting-check-ins/forums/" target="_blank">forum</a>. Many others also contributed valuable insights.
 
-{% include image.html url="/img/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
+{% include image.html url="/img/Facebook/PrivateLB.png" description="Private leaderboard score (MAP@3) - two teams stand out from the pack" %}
 
 I started the competition using a modest 8GB laptop but decided to purchase a €1500 workstation two weeks into the competition to speed up the modeling. Starting with limited resources ended up to be an advantage since it forced me to think of ways to optimize the feature generation logic. My best friend during this competition was the data.table package.
 
