@@ -20,6 +20,6 @@ exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 analytics :
   provider : google
   google : 
-    tracking_id : 'UA-60860556-1'
+    tracking_id : 'UA-89904117-1'
   getclicky :
     site_id : 
