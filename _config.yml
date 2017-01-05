@@ -7,6 +7,7 @@ baseurl: ""
 url: "https://ttvand.github.io"
 facebook_username: tvdewiele
 github_username: ttvand
+linkedin_username: tom-van-de-wiele-a411a8136
 
 # Build settings
 markdown: kramdown
